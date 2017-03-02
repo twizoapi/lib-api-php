@@ -69,8 +69,8 @@ $sms->send();
 
 ## Examples ##
 
-In the examples directory you can find a collection of cli/web examples of how to use the api.
-To configure the examples you need to run examples/web/init.php from command line to create a configuration file with your api secret and host.
+In the examples directory you can find a collection of cli examples of how to use the api.
+When first running an example you will be asked for a host name and secret; this will be written to a config file.
 
 ## License ##
 [The MIT License](https://opensource.org/licenses/mit-license.php).
