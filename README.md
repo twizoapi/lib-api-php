@@ -29,42 +29,42 @@ The easiest way to start using the the Twizo API is to require it with [Composer
 Use the auto loader to load all required classes. If you're using Composer, you can skip this step and use the composer auto loader.
 
 ```php
-	require "autoload.php";
+require "autoload.php";
 ```
 
 Initializing the Twizo Api using your api secret and api host
 
 ```php
-	    $twizo = Twizo\Api\Twizo::getInstance('43reFDSrewrfet425rtefdGDSGds54twegdsgHaFST2refwd', 'api-asia-01.twizo.com');
+$twizo = Twizo\Api\Twizo::getInstance('43reFDSrewrfet425rtefdGDSGds54twegdsgHaFST2refwd', 'api-asia-01.twizo.com');
 	
 ```
 
 Create a new verification
 
 ```php
-        $verification = $twizo->createVerification('310123456789');
-        $verification->send();
+$verification = $twizo->createVerification('310123456789');
+$verification->send();
 ```
 
 Verify token
 
 ```php
-        try {
-            $result = $twizo->getTokenResult($verification->getMessageId(), '12345');
-        
-            print 'Success' . PHP_EOL;
-        } catch (Verification\Exception $e) {
-            print 'Failed: ' . $e->getMessage() . PHP_EOL;
-        } catch (Twizo\Api\Exception $e) {
-            print 'Exception: ' . $e->getMessage() . PHP_EOL;
-        }
+try {
+    $result = $twizo->getTokenResult($verification->getMessageId(), '12345');
+
+    print 'Success' . PHP_EOL;
+} catch (Verification\Exception $e) {
+    print 'Failed: ' . $e->getMessage() . PHP_EOL;
+} catch (Twizo\Api\Exception $e) {
+    print 'Exception: ' . $e->getMessage() . PHP_EOL;
+}
 ```
 
 Send sms
 
 ```php
-        $sms = $twizo->createSms('test message body', '310123456789', 'sender');
-        $sms->send();
+$sms = $twizo->createSms('test message body', '310123456789', 'sender');
+$sms->send();
 ```
 
 ## Examples ##
