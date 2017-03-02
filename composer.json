@@ -1,0 +1,22 @@
+{
+    "name": "twizo/lib-api-php",
+    "description": "Library to connect to Twizo to send SMS, Number Lookup or Verifications",
+    "require": {
+        "guzzlehttp/guzzle": "^5.3",
+        "php" : "^5.4 || ^7.0"
+    },
+    "homepage": "https://www.twizo.com/",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Twizo",
+            "email": "info@twizo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Twizo\\Api\\": "src/"
+        }
+    }
+}
