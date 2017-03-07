@@ -6,6 +6,7 @@ use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\Verification;
+use Twizo\Api\Entity\WidgetSession;
 
 /**
  * Main Twizo class
@@ -82,6 +83,20 @@ class Twizo implements TwizoInterface
     public function createVerification($recipient)
     {
         $verification = $this->factory->createVerification($recipient);
+
+        return $verification;
+    }
+
+    /**
+     * Create widget session for the supplied recipient
+     *
+     * @param string $recipient
+     *
+     * @return WidgetSession
+     */
+    public function createWidgetSession($recipient)
+    {
+        $verification = $this->factory->createWidgetSession($recipient);
 
         return $verification;
     }
@@ -218,6 +233,24 @@ class Twizo implements TwizoInterface
         $verification->populate($messageId);
 
         return $verification;
+    }
+
+    /**
+     * Get widget status for the supplied session token
+     *
+     * @param string $sessionToken
+     * @param string $recipient
+     *
+     * @return WidgetSession
+     *
+     * @throws Exception
+     */
+    public function getWidgetSession($sessionToken, $recipient)
+    {
+        $widgetSession = $this->factory->createEmptyWidgetSession();
+        $widgetSession->populate($sessionToken, $recipient);
+
+        return $widgetSession;
     }
 
     /**

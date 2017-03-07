@@ -50,6 +50,11 @@ class Sms extends AbstractEntity
     protected $dcs;
 
     /**
+     * @var string|null
+     */
+    protected $messageId;
+
+    /**
      * @var int|null
      */
     protected $networkCode;
@@ -199,6 +204,14 @@ class Sms extends AbstractEntity
     public function getDcs()
     {
         return $this->dcs;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
     }
 
     /**

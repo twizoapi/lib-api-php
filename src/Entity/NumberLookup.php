@@ -43,6 +43,11 @@ class NumberLookup extends AbstractEntity
     /**
      * @var string|null
      */
+    protected $messageId;
+
+    /**
+     * @var string|null
+     */
     protected $msc;
 
     /**
@@ -153,6 +158,14 @@ class NumberLookup extends AbstractEntity
     public function getImsi()
     {
         return $this->imsi;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
     }
 
     /**

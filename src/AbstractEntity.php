@@ -28,11 +28,6 @@ abstract class AbstractEntity
     protected $client;
 
     /**
-     * @var string
-     */
-    protected $messageId;
-
-    /**
      * @var array
      */
     protected $postFields = array();
@@ -120,25 +115,17 @@ abstract class AbstractEntity
     }
 
     /**
-     * @return string
-     */
-    public function getMessageId()
-    {
-        return $this->messageId;
-    }
-
-    /**
-     * @param string $messageId
+     * @param string $id
      *
      * @throws EntityException
      */
-    public function populate($messageId)
+    public function populate($id)
     {
-        if (empty($messageId)) {
+        if (empty($id)) {
             throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $messageId);
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id);
     }
 
     /**
