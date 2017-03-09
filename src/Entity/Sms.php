@@ -486,7 +486,7 @@ class Sms extends AbstractEntity
     /**
      * @param array $recipients
      */
-    public function setRecipients($recipients)
+    public function setRecipients(array $recipients)
     {
         $this->recipients = $recipients;
         $this->addPostField('recipients');

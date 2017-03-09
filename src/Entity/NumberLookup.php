@@ -324,7 +324,7 @@ class NumberLookup extends AbstractEntity
     /**
      * @param array $numbers
      */
-    public function setNumbers($numbers)
+    public function setNumbers(array $numbers)
     {
         $this->numbers = $numbers;
         $this->addPostField('numbers');
