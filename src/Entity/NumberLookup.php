@@ -20,6 +20,11 @@ class NumberLookup extends AbstractEntity
     const RESULT_TYPE_CALLBACK = 1;
     const RESULT_TYPE_POLL = 2;
 
+    // Used for is roaming / is ported fields
+    const VALUE_YES = 'Yes';
+    const VALUE_NO = 'No';
+    const VALUE_UNKNOWN = 'Unknown';
+
     /**
      * @var string|null
      */
@@ -44,6 +49,16 @@ class NumberLookup extends AbstractEntity
      * @var string|null;
      */
     protected $imsi;
+
+    /**
+     * @var string|null
+     */
+    protected $isPorted;
+
+    /**
+     * @var string|null
+     */
+    protected $isRoaming;
 
     /**
      * @var string|null
@@ -176,6 +191,22 @@ class NumberLookup extends AbstractEntity
     public function getImsi()
     {
         return $this->imsi;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsPorted()
+    {
+        return $this->isPorted;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsRoaming()
+    {
+        return $this->isRoaming;
     }
 
     /**
