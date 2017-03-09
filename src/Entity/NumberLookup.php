@@ -36,6 +36,11 @@ class NumberLookup extends AbstractEntity
     protected $countryCode;
 
     /**
+     * @var string|null
+     */
+    protected $createdDateTime;
+
+    /**
      * @var string|null;
      */
     protected $imsi;
@@ -150,6 +155,14 @@ class NumberLookup extends AbstractEntity
     protected function getCreateUrl()
     {
         return 'numberlookup/submit';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCreatedDateTime()
+    {
+        return $this->createdDateTime;
     }
 
     /**
