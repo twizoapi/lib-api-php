@@ -39,6 +39,11 @@ class Verification extends AbstractEntity
     protected $bodyTemplate;
 
     /**
+     * @var string|null
+     */
+    protected $createdDateTime;
+
+    /**
      * @var int|null
      */
     protected $dcs;
@@ -155,6 +160,14 @@ class Verification extends AbstractEntity
     protected function getCreateUrl()
     {
         return 'verification/submit';
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCreatedDateTime()
+    {
+        return $this->createdDateTime;
     }
 
     /**
