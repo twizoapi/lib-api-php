@@ -54,6 +54,11 @@ class Verification extends AbstractEntity
     protected $messageId;
 
     /**
+     * @var int|null
+     */
+    protected $reasonCode;
+
+    /**
      * @var string|null
      */
     protected $recipient;
@@ -174,6 +179,14 @@ class Verification extends AbstractEntity
     public function getMessageId()
     {
         return $this->messageId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getReasonCode()
+    {
+        return $this->reasonCode;
     }
 
     /**
