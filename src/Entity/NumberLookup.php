@@ -121,6 +121,11 @@ class NumberLookup extends AbstractEntity
     protected $tag;
 
     /**
+     * @var string|null
+     */
+    protected $validUntilDateTime;
+
+    /**
      * @var int|null
      */
     protected $validity;
@@ -291,6 +296,14 @@ class NumberLookup extends AbstractEntity
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getValidUntilDateTime()
+    {
+        return $this->validUntilDateTime;
     }
 
     /**
