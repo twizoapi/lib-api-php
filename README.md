@@ -42,7 +42,7 @@ $twizo = Twizo\Api\Twizo::getInstance('43reFDSrewrfet425rtefdGDSGds54twegdsgHaFS
 Create a new verification
 
 ```php
-$verification = $twizo->createVerification('310123456789');
+$verification = $twizo->createVerification('610123456789');
 $verification->send();
 ```
 
@@ -63,7 +63,7 @@ try {
 Send sms
 
 ```php
-$sms = $twizo->createSms('test message body', '310123456789', 'sender');
+$sms = $twizo->createSms('test message body', '610123456789', 'sender');
 $sms->send();
 ```
 
