@@ -64,7 +64,7 @@ Send sms
 
 ```php
 $sms = $twizo->createSms('test message body', '610123456789', 'sender');
-$sms->send();
+$sms->sendSimple();
 ```
 
 ## Examples ##
