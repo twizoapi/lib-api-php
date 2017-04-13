@@ -161,16 +161,16 @@ abstract class AbstractEntity
                     );
                 } else {
                     throw new EntityException(
-                        'Could not connect to api server: ' . $e->getMessage(),
-                        EntityException::SERVER_UNAVAILABLE,
+                        'Exception received from api client: ' . $e->getMessage(),
+                        $e->getCode(),
                         $e->getResponse()->getStatusCode(),
                         isset($entity[0]['errorCode']) ? $entity[0]['errorCode'] : null
                     );
                 }
             } else {
                 throw new EntityException(
-                    'Could not connect to api server: ' . $e->getMessage(),
-                    EntityException::SERVER_UNAVAILABLE
+                    'Exception received from api client: ' . $e->getMessage(),
+                    $e->getCode()
                 );
             }
         }
