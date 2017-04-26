@@ -5,6 +5,7 @@ namespace Twizo\Api;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Verification;
+use Twizo\Api\Entity\WidgetSession;
 
 /**
  * Interface for Twizo
@@ -48,6 +49,15 @@ interface TwizoInterface
     public function createVerification($recipient);
 
     /**
+     * Create widget session for the supplied recipient
+     *
+     * @param string $recipient
+     *
+     * @return WidgetSession
+     */
+    public function createWidgetSession($recipient);
+
+    /**
      * Get number lookup status for the supplied message id
      *
      * @param string $messageId
@@ -77,6 +87,18 @@ interface TwizoInterface
      * @throws Exception
      */
     public function getSms($messageId);
+
+    /**
+     * Get sms status for the supplied session token
+     *
+     * @param string $sessionToken
+     * @param string $recipient
+     *
+     * @return WidgetSession
+     *
+     * @throws Exception
+     */
+    public function getWidgetSession($sessionToken, $recipient);
 
     /**
      * Get sms polling results; returns only results for messages which have result type polling enabled

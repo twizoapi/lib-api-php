@@ -23,4 +23,5 @@ class Exception extends \Exception
     const NO_MESSAGE_ID_SUPPLIED = 7;
     const INVALID_APPLICATION_SECRET = 8;
     const UNDEFINED_FIELD_ACCESSED = 9;
+    const SERVICE_UNAVAILABLE = 10;
 }

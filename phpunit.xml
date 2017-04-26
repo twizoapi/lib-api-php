@@ -5,7 +5,7 @@
          syntaxCheck="true"
          bootstrap="tests/bootstrap.php"
          beStrictAboutTestsThatDoNotTestAnything="true"
-         checkForUnintentionallyCoveredCode="true"
+         beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestSize="true">
 

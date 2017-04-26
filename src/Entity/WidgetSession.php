@@ -3,9 +3,10 @@
 namespace Twizo\Api\Entity;
 
 use Twizo\Api\AbstractEntity;
+use Twizo\Api\Entity\Exception as EntityException;
 
 /**
- * Verification entity object
+ * Widget entity object
  *
  * This file is part of the Twizo php api
  *
@@ -14,7 +15,7 @@ use Twizo\Api\AbstractEntity;
  * For the full copyright and license information, please view the LICENSE
  * File that was distributed with this source code.
  */
-class Verification extends AbstractEntity
+class WidgetSession extends AbstractEntity
 {
     const TYPE_CALL = 'call';
     const TYPE_SMS = 'sms';
@@ -24,9 +25,13 @@ class Verification extends AbstractEntity
 
     const STATUS_NO_STATUS = 0;
     const STATUS_SUCCESS = 1;
-    const STATUS_REJECTED = 2;
-    const STATUS_EXPIRED = 3;
-    const STATUS_FAILED = 4;
+    const STATUS_EXPIRED = 2;
+    const STATUS_MAX_ATTEMPTS = 3;
+
+    /**
+     * @var array
+     */
+    protected $allowedTypes;
 
     /**
      * @var string|null
@@ -56,27 +61,7 @@ class Verification extends AbstractEntity
     /**
      * @var string|null
      */
-    protected $messageId;
-
-    /**
-     * @var int|null
-     */
-    protected $reasonCode;
-
-    /**
-     * @var string|null
-     */
     protected $recipient;
-
-    /**
-     * @var float|null
-     */
-    protected $salesPrice;
-
-    /**
-     * @var float|null
-     */
-    protected $salesPriceCurrencyCode;
 
     /**
      * @var string|null
@@ -96,10 +81,10 @@ class Verification extends AbstractEntity
     /**
      * @var string|null
      */
-    protected $sessionId;
+    protected $sessionToken;
 
     /**
-     * @var string|null
+     * @var int|null
      */
     protected $status;
 
@@ -124,19 +109,45 @@ class Verification extends AbstractEntity
     protected $tokenType;
 
     /**
-     * @var string|null
-     */
-    protected $type;
-
-    /**
-     * @var string|null
-     */
-    protected $validUntilDateTime;
-
-    /**
      * @var int|null
      */
     protected $validity;
+
+    /**
+     * Create widget
+     *
+     * @throws Exception
+     */
+    public function create()
+    {
+        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl());
+    }
+
+    /**
+     * @param string $id
+     * @param string $recipient
+     *
+     * @throws EntityException
+     */
+    public function populate($id, $recipient = null)
+    {
+        if (empty($id)) {
+            throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
+        }
+        if ($recipient === null) {
+            throw new EntityException('No recipient supplied', EntityException::INVALID_FIELDS);
+        }
+
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id . '?recipient=' . $recipient);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedTypes()
+    {
+        return $this->allowedTypes;
+    }
 
     /**
      * @return string|null
@@ -159,7 +170,7 @@ class Verification extends AbstractEntity
      */
     protected function getCreateUrl()
     {
-        return 'verification/submit';
+        return 'widget/verification/session';
     }
 
     /**
@@ -189,41 +200,9 @@ class Verification extends AbstractEntity
     /**
      * @return string|null
      */
-    public function getMessageId()
-    {
-        return $this->messageId;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getReasonCode()
-    {
-        return $this->reasonCode;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getRecipient()
     {
         return $this->recipient;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getSalesPrice()
-    {
-        return $this->salesPrice;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getSalesPriceCurrencyCode()
-    {
-        return $this->salesPriceCurrencyCode;
     }
 
     /**
@@ -251,15 +230,15 @@ class Verification extends AbstractEntity
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
-    public function getSessionId()
+    public function getSessionToken()
     {
-        return $this->sessionId;
+        return $this->sessionToken;
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
     public function getStatus()
     {
@@ -299,22 +278,6 @@ class Verification extends AbstractEntity
     }
 
     /**
-     * @return string|null
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getValidUntilDateTime()
-    {
-        return $this->validUntilDateTime;
-    }
-
-    /**
      * @return int|null
      */
     public function getValidity()
@@ -323,13 +286,12 @@ class Verification extends AbstractEntity
     }
 
     /**
-     * Create entity on server
-     *
-     * @throws Exception
+     * @param array $allowedTypes
      */
-    public function send()
+    public function setAllowedTypes(array $allowedTypes)
     {
-        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl());
+        $this->addPostField('allowedTypes');
+        $this->allowedTypes = $allowedTypes;
     }
 
     /**
@@ -396,15 +358,6 @@ class Verification extends AbstractEntity
     }
 
     /**
-     * @param string $sessionId
-     */
-    public function setSessionId($sessionId)
-    {
-        $this->sessionId = $sessionId;
-        $this->addPostField('sessionId');
-    }
-
-    /**
      * @param string $tag
      */
     public function setTag($tag)
@@ -432,49 +385,11 @@ class Verification extends AbstractEntity
     }
 
     /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        $this->addPostField('type');
-    }
-
-    /**
      * @param int $validity
      */
     public function setValidity($validity)
     {
         $this->validity = $validity;
         $this->addPostField('validity');
-    }
-
-    /**
-     * @param string $token
-     * @param null   $messageId
-     *
-     * @throws Exception
-     */
-    public function verify($token, $messageId = null)
-    {
-        $messageId = ($messageId !== null) ? $messageId : $this->messageId;
-
-        // Throw error for empty token or empty message id, because the server will not handle this
-        if (empty($token)) {
-            throw new Verification\EmptyTokenException();
-        }
-        if (empty($messageId)) {
-            throw new Verification\EmptyMessageIdException();
-        }
-
-        try {
-            $this->sendApiCall(self::ACTION_RETRIEVE, sprintf('%s/%s?token=%s', $this->getCreateUrl(), $messageId, $token));
-        } catch (Exception $e) {
-            if (Verification\Exception::isVerificationException($e)) {
-                throw new Verification\Exception($e);
-            } else {
-                throw $e;
-            }
-        }
     }
 }

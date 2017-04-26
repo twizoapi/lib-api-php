@@ -64,6 +64,16 @@ class Factory
     }
 
     /**
+     * Create empty widget session object
+     *
+     * @return WidgetSession
+     */
+    public function createEmptyWidgetSession()
+    {
+        return new WidgetSession($this->client);
+    }
+
+    /**
      * Create number lookup for numbers
      *
      * @param array $numbers
@@ -130,5 +140,20 @@ class Factory
         $verification->setRecipient($recipient);
 
         return $verification;
+    }
+
+    /**
+     * Create widget session object
+     *
+     * @param string $recipient
+     *
+     * @return WidgetSession
+     */
+    public function createWidgetSession($recipient)
+    {
+        $widgetSession = $this->createEmptyWidgetSession();
+        $widgetSession->setRecipient($recipient);
+
+        return $widgetSession;
     }
 }

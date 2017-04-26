@@ -20,6 +20,11 @@ class NumberLookup extends AbstractEntity
     const RESULT_TYPE_CALLBACK = 1;
     const RESULT_TYPE_POLL = 2;
 
+    // Used for is roaming / is ported fields
+    const VALUE_YES = 'Yes';
+    const VALUE_NO = 'No';
+    const VALUE_UNKNOWN = 'Unknown';
+
     /**
      * @var string|null
      */
@@ -36,9 +41,29 @@ class NumberLookup extends AbstractEntity
     protected $countryCode;
 
     /**
+     * @var string|null
+     */
+    protected $createdDateTime;
+
+    /**
      * @var string|null;
      */
     protected $imsi;
+
+    /**
+     * @var string|null
+     */
+    protected $isPorted;
+
+    /**
+     * @var string|null
+     */
+    protected $isRoaming;
+
+    /**
+     * @var string|null
+     */
+    protected $messageId;
 
     /**
      * @var string|null
@@ -111,6 +136,11 @@ class NumberLookup extends AbstractEntity
     protected $tag;
 
     /**
+     * @var string|null
+     */
+    protected $validUntilDateTime;
+
+    /**
      * @var int|null
      */
     protected $validity;
@@ -150,9 +180,41 @@ class NumberLookup extends AbstractEntity
     /**
      * @return string|null
      */
+    public function getCreatedDateTime()
+    {
+        return $this->createdDateTime;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getImsi()
     {
         return $this->imsi;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsPorted()
+    {
+        return $this->isPorted;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsRoaming()
+    {
+        return $this->isRoaming;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
     }
 
     /**
@@ -268,6 +330,14 @@ class NumberLookup extends AbstractEntity
     }
 
     /**
+     * @return null|string
+     */
+    public function getValidUntilDateTime()
+    {
+        return $this->validUntilDateTime;
+    }
+
+    /**
      * @return int|null
      */
     public function getValidity()
@@ -311,7 +381,7 @@ class NumberLookup extends AbstractEntity
     /**
      * @param array $numbers
      */
-    public function setNumbers($numbers)
+    public function setNumbers(array $numbers)
     {
         $this->numbers = $numbers;
         $this->addPostField('numbers');

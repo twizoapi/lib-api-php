@@ -119,7 +119,7 @@ abstract class AbstractClient
                 throw new ClientException('Your account is not enabled for the service', ClientException::INVALID_APPLICATION_SECRET, $response);
                 break;
             case Response::REST_CLIENT_ERROR_NOT_FOUND:
-                throw new ClientException('The Verification, SMS or Number Lookup with the specified messageId was not found', ClientException::INVALID_RESPONSE, $response);
+                throw new ClientException('The requested entity was not found on the server', ClientException::INVALID_RESPONSE, $response);
                 break;
             case Response::REST_CLIENT_ERROR_TOO_MANY_REQUESTS:
                 throw new ClientException('You are sending too fast and your calls are throttled', ClientException::SERVER_UNAVAILABLE, $response);
