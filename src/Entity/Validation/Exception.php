@@ -24,10 +24,12 @@ class Exception extends Entity\Exception
     /**
      * Parse validation messages from api and generate exception
      *
-     * @param array $validationFields
-     * @param array $postFields
+     * @param array    $validationFields
+     * @param array    $postFields
+     * @param int|null $statusCode
+     * @param int|null $jsonErrorCode
      */
-    public function __construct(array $validationFields, $postFields)
+    public function __construct(array $validationFields, $postFields, $statusCode = null, $jsonErrorCode = null)
     {
         // Loop through all validation fields
         foreach ($validationFields as $field => $errorMessages) {
@@ -38,7 +40,7 @@ class Exception extends Entity\Exception
             $exceptionMessages[] = sprintf('Validation error for field "%s" : %s', $errorField->getName(), $errorField->getMessage());
         }
 
-        parent::__construct(implode(', ', $exceptionMessages), self::VALIDATION_ERRORS);
+        parent::__construct(implode(', ', $exceptionMessages), self::VALIDATION_ERRORS, $statusCode, $jsonErrorCode);
     }
 
     /**
