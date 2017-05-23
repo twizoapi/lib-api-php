@@ -19,6 +19,7 @@ use Twizo\Api\Entity\Validation\Exception as ValidationException;
 abstract class AbstractEntity
 {
     const ACTION_CREATE = 'POST';
+    const ACTION_UPDATE = 'PUT';
     const ACTION_RETRIEVE = 'GET';
     const ACTION_REMOVE = 'DELETE';
 

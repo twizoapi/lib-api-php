@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Sms;
@@ -33,6 +34,20 @@ class Twizo implements TwizoInterface
     public function __construct(Factory $factory)
     {
         $this->factory = $factory;
+    }
+
+    /**
+     * Create backup code for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier)
+    {
+        $backupCode = $this->factory->createBackupCode($identifier);
+
+        return $backupCode;
     }
 
     /**
@@ -118,6 +133,23 @@ class Twizo implements TwizoInterface
                 AbstractClient::getInstance($secret, $apiHost)
             )
         );
+    }
+
+    /**
+     * Get backup code status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     *
+     * @throws Exception
+     */
+    public function getBackupCode($identifier)
+    {
+        $backupCode = $this->factory->createEmptyBackupCode();
+        $backupCode->populate($identifier);
+
+        return $backupCode;
     }
 
     /**

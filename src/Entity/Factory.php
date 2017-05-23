@@ -32,6 +32,16 @@ class Factory
     }
 
     /**
+     * Create empty backup code object
+     *
+     * @return BackupCode
+     */
+    public function createEmptyBackupCode()
+    {
+        return new BackupCode($this->client);
+    }
+
+    /**
      * Create empty number lookup object
      *
      * @return NumberLookup
@@ -71,6 +81,21 @@ class Factory
     public function createEmptyWidgetSession()
     {
         return new WidgetSession($this->client);
+    }
+
+    /**
+     * Create backup code object
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier)
+    {
+        $backupCode = $this->createEmptyBackupCode();
+        $backupCode->setIdentifier($identifier);
+
+        return $backupCode;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Verification;
@@ -19,6 +20,15 @@ use Twizo\Api\Entity\WidgetSession;
  */
 interface TwizoInterface
 {
+    /**
+     * Create backup code for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier);
+
     /**
      * Create number lookup for the supplied number(s)
      *
@@ -56,6 +66,17 @@ interface TwizoInterface
      * @return WidgetSession
      */
     public function createWidgetSession($recipient);
+
+    /**
+     * Get backup code status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     *
+     * @throws Exception
+     */
+    public function getBackupCode($identifier);
 
     /**
      * Get number lookup status for the supplied message id
