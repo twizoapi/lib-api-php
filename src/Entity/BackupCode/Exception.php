@@ -17,11 +17,10 @@ use Twizo\Api\Response\RestStatusCodesInterface;
  */
 class Exception extends EntityException
 {
-    const NO_IDENTIFIER_SUPPLIED = 101;
-    const NO_TOKEN_SUPPLIED = 102;
-
-    const INVALID_TOKEN = 400;
-    const IDENTIFIER_TOO_LONG = 401;
+    const NO_IDENTIFIER_SUPPLIED = 1;
+    const NO_TOKEN_SUPPLIED = 1;
+    const IDENTIFIER_TOO_LONG = 2;
+    const INVALID_TOKEN = 103;
 
     /**
      * Constructor

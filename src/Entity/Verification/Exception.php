@@ -39,7 +39,7 @@ class Exception extends EntityException
             case self::ERROR_TOKEN_INVALID_TOKEN:
                 $message = 'Invalid token supplied';
                 break;
-            case self::ERROR_TOKEN_VERIFY_FAILED:
+            case self::ERROR_TOKEN_VERIFY_FAILED: //Rejected
                 $message = 'Verification was not send';
                 break;
             default:
