@@ -59,13 +59,15 @@ interface TwizoInterface
     public function createVerification($recipient);
 
     /**
-     * Create widget session for the supplied recipient
+     * Create widget session with the supplied data
      *
-     * @param string $recipient
+     * @param array       $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession($recipient);
+    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Get backup code status for the supplied identifier
@@ -110,16 +112,17 @@ interface TwizoInterface
     public function getSms($messageId);
 
     /**
-     * Get sms status for the supplied session token
+     * Get widget session status for the supplied session token
      *
-     * @param string $sessionToken
-     * @param string $recipient
+     * @param string      $sessionToken
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      *
      * @throws Exception
      */
-    public function getWidgetSession($sessionToken, $recipient);
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Get sms polling results; returns only results for messages which have result type polling enabled

@@ -13,24 +13,29 @@ use Twizo\Api\Response;
 class BackupCode extends AbstractEntity
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $identifier;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $amountOfCodesLeft;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $codes;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $createdDateTime;
+
+    /**
+     * @var Verification|null
+     */
+    protected $verification;
 
     /**
      * @return string
@@ -41,7 +46,7 @@ class BackupCode extends AbstractEntity
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getAmountOfCodesLeft()
     {
@@ -49,7 +54,7 @@ class BackupCode extends AbstractEntity
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getCodes()
     {
@@ -57,7 +62,7 @@ class BackupCode extends AbstractEntity
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getCreatedDateTime()
     {
@@ -65,7 +70,7 @@ class BackupCode extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIdentifier()
     {

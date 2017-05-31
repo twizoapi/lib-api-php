@@ -170,14 +170,23 @@ class Factory
     /**
      * Create widget session object
      *
-     * @param string $recipient
+     * @param array       $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession($recipient)
+    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null)
     {
         $widgetSession = $this->createEmptyWidgetSession();
-        $widgetSession->setRecipient($recipient);
+        $widgetSession->setAllowedTypes($allowedTypes);
+
+        if ($recipient !== null) {
+            $widgetSession->setRecipient($recipient);
+        }
+        if ($backupCodeIdentifier !== null) {
+            $widgetSession->setBackupCodeIdentifier($backupCodeIdentifier);
+        }
 
         return $widgetSession;
     }
