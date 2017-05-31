@@ -170,7 +170,7 @@ class WidgetSession extends AbstractEntity
      */
     protected function getCreateUrl()
     {
-        return 'widget/verification/session';
+        return 'widget/session';
     }
 
     /**
