@@ -4,6 +4,7 @@ namespace Twizo\Api;
 
 use Twizo\Api\Client\Exception as ClientException;
 use Twizo\Api\Entity\Exception as EntityException;
+use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\Validation\Exception as ValidationException;
 
 /**
@@ -29,6 +30,11 @@ abstract class AbstractEntity
     protected $client;
 
     /**
+     * @var Factory
+     */
+    protected $factory;
+
+    /**
      * @var array
      */
     protected $postFields = array();
@@ -37,10 +43,12 @@ abstract class AbstractEntity
      * Constructor
      *
      * @param AbstractClient $client
+     * @param Factory        $factory
      */
-    public function __construct(AbstractClient $client)
+    public function __construct(AbstractClient $client, Factory $factory)
     {
         $this->client = $client;
+        $this->factory = $factory;
     }
 
     /**
@@ -189,6 +197,34 @@ abstract class AbstractEntity
         foreach ($fields as $field => $value) {
             if (property_exists($this, $field)) {
                 $this->{$field} = $value;
+            }
+        }
+
+        if (isset($fields['_embedded'])) {
+            foreach ($fields['_embedded'] as $embeddedType => $embeddedValue) {
+                if (property_exists($this, $embeddedType)) {
+                    $propertyObject = $this->factory->createFromPropertyName($embeddedType);
+                    if ($propertyObject === null) {
+                        continue;
+                    }
+
+                    if (is_array($propertyObject)) { //Property is a collection
+                        foreach ($embeddedValue as $entityType => $entityFields) {
+                            $entityObject = $this->factory->createFromPropertyName($entityType);
+                            if ($entityObject === null) {
+                                continue;
+                            }
+
+                            $entityObject->setFields($entityFields);
+
+                            $propertyObject[] = $entityObject;
+                        }
+                    } else { //Property is an entity
+                        $propertyObject->setFields($embeddedValue);
+                    }
+
+                    $this->{$embeddedType} = $propertyObject;
+                }
             }
         }
     }

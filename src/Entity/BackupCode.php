@@ -78,6 +78,14 @@ class BackupCode extends AbstractEntity
     }
 
     /**
+     * @return Verification|Null
+     */
+    public function getVerification()
+    {
+        return $this->verification;
+    }
+
+    /**
      * @param string $identifier
      */
     public function setIdentifier($identifier)
