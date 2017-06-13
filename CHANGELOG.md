@@ -3,6 +3,18 @@ CHANGELOG
 
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+## 0.3.0 - 2017-06-13
+### Added
+- Added backup codes support
+- Added support for embedded entity/collection
+
+### Changed
+- WidgetSession now has 'allowedTypes' as mandatory field. Recipient & BackupCodeIdentifier are optional.
+- WidgetSession gained new fields 'verification' & 'verificationIds'
+- WidgetSession uri has been changed
+
+### Fixed
+- Add missing fields to validation exception constructor
 
 ## 0.2.0 - 2017-04-26
 ### Added

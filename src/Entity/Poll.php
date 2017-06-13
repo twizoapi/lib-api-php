@@ -40,11 +40,12 @@ class Poll extends AbstractEntity
      * Poll constructor.
      *
      * @param AbstractClient $client
+     * @param Factory        $factory
      * @param string         $type
      */
-    public function __construct(AbstractClient $client, $type)
+    public function __construct(AbstractClient $client, Factory $factory, $type)
     {
-        parent::__construct($client);
+        parent::__construct($client, $factory);
 
         $this->type = $type;
     }

@@ -119,7 +119,25 @@ abstract class AbstractClient
                 throw new ClientException('Your account is not enabled for the service', ClientException::INVALID_APPLICATION_SECRET, $response);
                 break;
             case Response::REST_CLIENT_ERROR_NOT_FOUND:
-                throw new ClientException('The requested entity was not found on the server', ClientException::INVALID_RESPONSE, $response);
+                throw new ClientException('The requested entity was not found on the server', ClientException::ENTITY_NOT_FOUND, $response);
+                break;
+            case Response::REST_CLIENT_ERROR_CONFLICT:
+                $body = $response->getBody();
+
+                $message = (isset($body['detail'])) ? $body['detail'] : 'The request was rejected due to an conflict.';
+                throw new ClientException($message, ClientException::INVALID_RESPONSE, $response);
+                break;
+            case Response::REST_CLIENT_ERROR_UNPROCESSABLE_ENTITY:
+                $body = $response->getBody();
+
+                $message = (isset($body['detail'])) ? $body['detail'] : 'Unable to process the request';
+                throw new ClientException($message, ClientException::INVALID_RESPONSE, $response);
+                break;
+            case Response::REST_CLIENT_ERROR_LOCKED:
+                $body = $response->getBody();
+
+                $message = (isset($body['detail'])) ? $body['detail'] : 'The request could not be processed as the entity was locked.';
+                throw new ClientException($message, ClientException::INVALID_RESPONSE, $response);
                 break;
             case Response::REST_CLIENT_ERROR_TOO_MANY_REQUESTS:
                 throw new ClientException('You are sending too fast and your calls are throttled', ClientException::SERVER_UNAVAILABLE, $response);

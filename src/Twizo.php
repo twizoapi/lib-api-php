@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Sms;
@@ -33,6 +34,20 @@ class Twizo implements TwizoInterface
     public function __construct(Factory $factory)
     {
         $this->factory = $factory;
+    }
+
+    /**
+     * Create backup code for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier)
+    {
+        $backupCode = $this->factory->createBackupCode($identifier);
+
+        return $backupCode;
     }
 
     /**
@@ -88,17 +103,19 @@ class Twizo implements TwizoInterface
     }
 
     /**
-     * Create widget session for the supplied recipient
+     * Create widget session with the supplied data
      *
-     * @param string $recipient
+     * @param array $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession($recipient)
+    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null)
     {
-        $verification = $this->factory->createWidgetSession($recipient);
+        $widgetSession = $this->factory->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier);
 
-        return $verification;
+        return $widgetSession;
     }
 
     /**
@@ -118,6 +135,23 @@ class Twizo implements TwizoInterface
                 AbstractClient::getInstance($secret, $apiHost)
             )
         );
+    }
+
+    /**
+     * Get backup code status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     *
+     * @throws Exception
+     */
+    public function getBackupCode($identifier)
+    {
+        $backupCode = $this->factory->createEmptyBackupCode();
+        $backupCode->populate($identifier);
+
+        return $backupCode;
     }
 
     /**
@@ -236,19 +270,20 @@ class Twizo implements TwizoInterface
     }
 
     /**
-     * Get widget status for the supplied session token
+     * Get widget session status for the supplied session token
      *
-     * @param string $sessionToken
-     * @param string $recipient
+     * @param string      $sessionToken
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      *
      * @throws Exception
      */
-    public function getWidgetSession($sessionToken, $recipient)
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null)
     {
         $widgetSession = $this->factory->createEmptyWidgetSession();
-        $widgetSession->populate($sessionToken, $recipient);
+        $widgetSession->populate($sessionToken, $recipient, $backupCodeIdentifier);
 
         return $widgetSession;
     }

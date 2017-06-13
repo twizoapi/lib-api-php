@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Verification;
@@ -19,6 +20,15 @@ use Twizo\Api\Entity\WidgetSession;
  */
 interface TwizoInterface
 {
+    /**
+     * Create backup code for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier);
+
     /**
      * Create number lookup for the supplied number(s)
      *
@@ -49,13 +59,26 @@ interface TwizoInterface
     public function createVerification($recipient);
 
     /**
-     * Create widget session for the supplied recipient
+     * Create widget session with the supplied data
      *
-     * @param string $recipient
+     * @param array       $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession($recipient);
+    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null);
+
+    /**
+     * Get backup code status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     *
+     * @throws Exception
+     */
+    public function getBackupCode($identifier);
 
     /**
      * Get number lookup status for the supplied message id
@@ -89,16 +112,17 @@ interface TwizoInterface
     public function getSms($messageId);
 
     /**
-     * Get sms status for the supplied session token
+     * Get widget session status for the supplied session token
      *
-     * @param string $sessionToken
-     * @param string $recipient
+     * @param string      $sessionToken
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      *
      * @throws Exception
      */
-    public function getWidgetSession($sessionToken, $recipient);
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Get sms polling results; returns only results for messages which have result type polling enabled

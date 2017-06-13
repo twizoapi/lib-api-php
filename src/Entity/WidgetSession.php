@@ -19,6 +19,7 @@ class WidgetSession extends AbstractEntity
 {
     const TYPE_CALL = 'call';
     const TYPE_SMS = 'sms';
+    const TYPE_BACKUP_CODE = 'backupcode';
 
     const TOKEN_TYPE_NUMERIC = 'numeric';
     const TOKEN_TYPE_ALPHANUMERIC = 'alphanumeric';
@@ -37,6 +38,11 @@ class WidgetSession extends AbstractEntity
      * @var string|null
      */
     protected $applicationTag;
+
+    /**
+     * @var string|null
+     */
+    protected $backupCodeIdentifier;
 
     /**
      * @var string|null
@@ -114,6 +120,16 @@ class WidgetSession extends AbstractEntity
     protected $validity;
 
     /**
+     * @var Verification|null
+     */
+    protected $verification;
+
+    /**
+     * @var array|null
+     */
+    protected $verificationIds;
+
+    /**
      * Create widget
      *
      * @throws Exception
@@ -124,21 +140,30 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
-     * @param string $id
-     * @param string $recipient
+     * @param string      $id
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @throws EntityException
      */
-    public function populate($id, $recipient = null)
+    public function populate($id, $recipient = null, $backupCodeIdentifier = null)
     {
         if (empty($id)) {
             throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
         }
-        if ($recipient === null) {
-            throw new EntityException('No recipient supplied', EntityException::INVALID_FIELDS);
+        if ($recipient === null && $backupCodeIdentifier === null) {
+            throw new EntityException('No recipient or backup code identifier supplied', EntityException::INVALID_FIELDS);
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id . '?recipient=' . $recipient);
+        $params = [];
+        if ($recipient !== null) {
+            $params['recipient'] = $recipient;
+        }
+        if ($backupCodeIdentifier !== null) {
+            $params['backupCodeIdentifier'] = $backupCodeIdentifier;
+        }
+
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id . '?' . http_build_query($params));
     }
 
     /**
@@ -160,6 +185,14 @@ class WidgetSession extends AbstractEntity
     /**
      * @return string|null
      */
+    public function getBackupCodeIdentifier()
+    {
+        return $this->backupCodeIdentifier;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getBodyTemplate()
     {
         return $this->bodyTemplate;
@@ -170,7 +203,7 @@ class WidgetSession extends AbstractEntity
      */
     protected function getCreateUrl()
     {
-        return 'widget/verification/session';
+        return 'widget/session';
     }
 
     /**
@@ -286,12 +319,37 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
+     * @return Verification|null
+     */
+    public function getVerification()
+    {
+        return $this->verification;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getVerificationIds()
+    {
+        return $this->verificationIds;
+    }
+
+    /**
      * @param array $allowedTypes
      */
     public function setAllowedTypes(array $allowedTypes)
     {
-        $this->addPostField('allowedTypes');
         $this->allowedTypes = $allowedTypes;
+        $this->addPostField('allowedTypes');
+    }
+
+    /**
+     * @param string $backupCodeIdentifier
+     */
+    public function setBackupCodeIdentifier($backupCodeIdentifier)
+    {
+        $this->backupCodeIdentifier = $backupCodeIdentifier;
+        $this->addPostField('backupCodeIdentifier');
     }
 
     /**

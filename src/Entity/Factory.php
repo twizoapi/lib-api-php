@@ -32,13 +32,23 @@ class Factory
     }
 
     /**
+     * Create empty backup code object
+     *
+     * @return BackupCode
+     */
+    public function createEmptyBackupCode()
+    {
+        return new BackupCode($this->client, $this);
+    }
+
+    /**
      * Create empty number lookup object
      *
      * @return NumberLookup
      */
     public function createEmptyNumberLookup()
     {
-        return new NumberLookup($this->client);
+        return new NumberLookup($this->client, $this);
     }
 
     /**
@@ -48,7 +58,7 @@ class Factory
      */
     public function createEmptySms()
     {
-        $sms = new Sms($this->client);
+        $sms = new Sms($this->client, $this);
 
         return $sms;
     }
@@ -60,7 +70,7 @@ class Factory
      */
     public function createEmptyVerification()
     {
-        return new Verification($this->client);
+        return new Verification($this->client, $this);
     }
 
     /**
@@ -70,7 +80,22 @@ class Factory
      */
     public function createEmptyWidgetSession()
     {
-        return new WidgetSession($this->client);
+        return new WidgetSession($this->client, $this);
+    }
+
+    /**
+     * Create backup code object
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier)
+    {
+        $backupCode = $this->createEmptyBackupCode();
+        $backupCode->setIdentifier($identifier);
+
+        return $backupCode;
     }
 
     /**
@@ -95,7 +120,7 @@ class Factory
      */
     public function createNumberLookupPoll()
     {
-        return new Poll($this->client, Poll::TYPE_NUMBER_LOOKUP);
+        return new Poll($this->client, $this, Poll::TYPE_NUMBER_LOOKUP);
     }
 
     /**
@@ -124,7 +149,7 @@ class Factory
      */
     public function createSmsPoll()
     {
-        return new Poll($this->client, Poll::TYPE_SMS);
+        return new Poll($this->client, $this, Poll::TYPE_SMS);
     }
 
     /**
@@ -143,16 +168,44 @@ class Factory
     }
 
     /**
+     * Create object by property name
+     *
+     * @param string $propertyName
+     *
+     * @return mixed|Null
+     */
+    public function createFromPropertyName($propertyName)
+    {
+        switch ($propertyName) {
+            case 'verification':
+                return $this->createEmptyVerification();
+            case 'verifications':
+                return [];
+        }
+
+        return null;
+    }
+
+    /**
      * Create widget session object
      *
-     * @param string $recipient
+     * @param array       $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession($recipient)
+    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null)
     {
         $widgetSession = $this->createEmptyWidgetSession();
-        $widgetSession->setRecipient($recipient);
+        $widgetSession->setAllowedTypes($allowedTypes);
+
+        if ($recipient !== null) {
+            $widgetSession->setRecipient($recipient);
+        }
+        if ($backupCodeIdentifier !== null) {
+            $widgetSession->setBackupCodeIdentifier($backupCodeIdentifier);
+        }
 
         return $widgetSession;
     }

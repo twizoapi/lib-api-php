@@ -24,4 +24,6 @@ class Exception extends \Exception
     const INVALID_APPLICATION_SECRET = 8;
     const UNDEFINED_FIELD_ACCESSED = 9;
     const SERVICE_UNAVAILABLE = 10;
+    const ENTITY_NOT_FOUND = 11;
+    const BACKUP_CODE_FAILED = 12;
 }
