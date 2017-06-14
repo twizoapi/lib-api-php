@@ -3,6 +3,11 @@ CHANGELOG
 
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+## 0.4.0 - 2017-06-14
+### Added
+- Function to retrieve balance
+
 ## 0.3.0 - 2017-06-13
 ### Added
 - Added backup codes support

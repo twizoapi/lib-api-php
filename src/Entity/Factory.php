@@ -32,6 +32,21 @@ class Factory
     }
 
     /**
+     * Create backup code object
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     */
+    public function createBackupCode($identifier)
+    {
+        $backupCode = $this->createEmptyBackupCode();
+        $backupCode->setIdentifier($identifier);
+
+        return $backupCode;
+    }
+
+    /**
      * Create empty backup code object
      *
      * @return BackupCode
@@ -39,6 +54,14 @@ class Factory
     public function createEmptyBackupCode()
     {
         return new BackupCode($this->client, $this);
+    }
+
+    /**
+     * @return Balance
+     */
+    public function createEmptyBalance()
+    {
+        return new Balance($this->client, $this);
     }
 
     /**
@@ -84,18 +107,22 @@ class Factory
     }
 
     /**
-     * Create backup code object
+     * Create object by property name
      *
-     * @param string $identifier
+     * @param string $propertyName
      *
-     * @return BackupCode
+     * @return mixed|Null
      */
-    public function createBackupCode($identifier)
+    public function createFromPropertyName($propertyName)
     {
-        $backupCode = $this->createEmptyBackupCode();
-        $backupCode->setIdentifier($identifier);
+        switch ($propertyName) {
+            case 'verification':
+                return $this->createEmptyVerification();
+            case 'verifications':
+                return [];
+        }
 
-        return $backupCode;
+        return null;
     }
 
     /**
@@ -165,25 +192,6 @@ class Factory
         $verification->setRecipient($recipient);
 
         return $verification;
-    }
-
-    /**
-     * Create object by property name
-     *
-     * @param string $propertyName
-     *
-     * @return mixed|Null
-     */
-    public function createFromPropertyName($propertyName)
-    {
-        switch ($propertyName) {
-            case 'verification':
-                return $this->createEmptyVerification();
-            case 'verifications':
-                return [];
-        }
-
-        return null;
     }
 
     /**

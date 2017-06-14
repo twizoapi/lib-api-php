@@ -8,6 +8,7 @@ use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
+use Twizo\Api\Entity\Balance;
 
 /**
  * Main Twizo class
@@ -105,7 +106,7 @@ class Twizo implements TwizoInterface
     /**
      * Create widget session with the supplied data
      *
-     * @param array $allowedTypes
+     * @param array       $allowedTypes
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
      *
@@ -116,6 +117,19 @@ class Twizo implements TwizoInterface
         $widgetSession = $this->factory->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier);
 
         return $widgetSession;
+    }
+
+    /**
+     * Return the current account balance
+     *
+     * @return Balance
+     */
+    public function getBalance()
+    {
+        $balance = $this->factory->createEmptyBalance();
+        $balance->loadData();
+
+        return $balance;
     }
 
     /**

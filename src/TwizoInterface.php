@@ -7,6 +7,7 @@ use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
+use Twizo\Api\Entity\Balance;
 
 /**
  * Interface for Twizo
@@ -81,6 +82,13 @@ interface TwizoInterface
     public function getBackupCode($identifier);
 
     /**
+     * Return the current account balance
+     *
+     * @return Balance
+     */
+    public function getBalance();
+
+    /**
      * Get number lookup status for the supplied message id
      *
      * @param string $messageId
@@ -110,19 +118,6 @@ interface TwizoInterface
      * @throws Exception
      */
     public function getSms($messageId);
-
-    /**
-     * Get widget session status for the supplied session token
-     *
-     * @param string      $sessionToken
-     * @param string|null $recipient
-     * @param string|null $backupCodeIdentifier
-     *
-     * @return WidgetSession
-     *
-     * @throws Exception
-     */
-    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Get sms polling results; returns only results for messages which have result type polling enabled
@@ -155,6 +150,19 @@ interface TwizoInterface
      * @throws Exception
      */
     public function getVerification($messageId);
+
+    /**
+     * Get widget session status for the supplied session token
+     *
+     * @param string      $sessionToken
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
+     *
+     * @return WidgetSession
+     *
+     * @throws Exception
+     */
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Verify token and return true when successful and false when there is an error
