@@ -142,6 +142,9 @@ abstract class AbstractClient
             case Response::REST_CLIENT_ERROR_TOO_MANY_REQUESTS:
                 throw new ClientException('You are sending too fast and your calls are throttled', ClientException::SERVER_UNAVAILABLE, $response);
                 break;
+            case Response::REST_CLIENT_ERROR_PAYMENT_REQUIRED:
+                throw new ClientException('Insufficient credit for your wallet', ClientException::INSUFFICIENT_CREDIT, $response);
+                break;
             case Response::REST_SUCCESS_OK:
             case Response::REST_SUCCESS_CREATED:
                 break; // Valid response
