@@ -26,4 +26,5 @@ class Exception extends \Exception
     const SERVICE_UNAVAILABLE = 10;
     const ENTITY_NOT_FOUND = 11;
     const BACKUP_CODE_FAILED = 12;
+    const INSUFFICIENT_CREDIT = 13;
 }
