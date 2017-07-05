@@ -163,7 +163,7 @@ class WidgetSession extends AbstractEntity
             $params['backupCodeIdentifier'] = $backupCodeIdentifier;
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id . '?' . http_build_query($params));
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id) . '?' . http_build_query($params));
     }
 
     /**

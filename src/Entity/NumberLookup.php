@@ -362,7 +362,7 @@ class NumberLookup extends AbstractEntity
 
         $result = array();
         foreach ($response->getBody()['_embedded']['items'] as $item) {
-            $result[] = $sms = new NumberLookup($this->client);
+            $result[] = $sms = new NumberLookup($this->client, $this->factory);
             $sms->setFields($item);
         }
 

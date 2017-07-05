@@ -56,7 +56,7 @@ class Poll extends AbstractEntity
     public function delete()
     {
         if ($this->batchId !== null) {
-            $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . $this->batchId);
+            $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . urlencode($this->batchId));
         }
     }
 

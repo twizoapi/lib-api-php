@@ -18,7 +18,9 @@ use Twizo\Examples\Util\EntityFormatter;
 $twizo = Twizo\Api\Twizo::getInstance(SECRET, API_HOST);
 
 try {
-    $backupCode = $twizo->getBackupCode(readline('Identifier: '));
+    $identifier = readline('Identifier: ');
+    $backupCode = $twizo->getBackupCode($identifier);
+    $backupCode->setIdentifier($identifier);
     $backupCode->update();
 
     EntityFormatter::dumpEntity($backupCode);
