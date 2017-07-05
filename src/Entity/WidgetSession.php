@@ -115,11 +115,6 @@ class WidgetSession extends AbstractEntity
     protected $tokenType;
 
     /**
-     * @var int|null
-     */
-    protected $validity;
-
-    /**
      * @var Verification|null
      */
     protected $verification;
@@ -163,7 +158,7 @@ class WidgetSession extends AbstractEntity
             $params['backupCodeIdentifier'] = $backupCodeIdentifier;
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id . '?' . http_build_query($params));
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id) . '?' . http_build_query($params));
     }
 
     /**
@@ -311,14 +306,6 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
-     * @return int|null
-     */
-    public function getValidity()
-    {
-        return $this->validity;
-    }
-
-    /**
      * @return Verification|null
      */
     public function getVerification()
@@ -440,14 +427,5 @@ class WidgetSession extends AbstractEntity
     {
         $this->tokenType = $tokenType;
         $this->addPostField('tokenType');
-    }
-
-    /**
-     * @param int $validity
-     */
-    public function setValidity($validity)
-    {
-        $this->validity = $validity;
-        $this->addPostField('validity');
     }
 }

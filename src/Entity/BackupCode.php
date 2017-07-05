@@ -99,7 +99,7 @@ class BackupCode extends AbstractEntity
      */
     public function create()
     {
-        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl() . '/' . $this->identifier);
+        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl());
     }
 
     /**
@@ -107,7 +107,7 @@ class BackupCode extends AbstractEntity
      */
     public function delete()
     {
-        $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . $this->identifier);
+        $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
     }
 
     /**
@@ -121,7 +121,7 @@ class BackupCode extends AbstractEntity
             throw new Exception('No identifier supplied for backup code', BackupCode\Exception::NO_IDENTIFIER_SUPPLIED);
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . $id);
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id));
     }
 
     /**
@@ -129,7 +129,7 @@ class BackupCode extends AbstractEntity
      */
     public function update()
     {
-        $this->sendApiCall(self::ACTION_UPDATE, $this->getCreateUrl() . '/' . $this->identifier);
+        $this->sendApiCall(self::ACTION_UPDATE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
     }
 
     /**
@@ -173,6 +173,6 @@ class BackupCode extends AbstractEntity
             throw new BackupCode\EmptyIdentifierException();
         }
 
-        $this->sendApiCall(self::ACTION_RETRIEVE, sprintf('%s/%s?token=%s', $this->getCreateUrl(), $identifier, $token));
+        $this->sendApiCall(self::ACTION_RETRIEVE, sprintf('%s/%s?token=%s', $this->getCreateUrl(), urlencode($identifier), $token));
     }
 }

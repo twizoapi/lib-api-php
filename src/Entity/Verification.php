@@ -468,7 +468,7 @@ class Verification extends AbstractEntity
         }
 
         try {
-            $this->sendApiCall(self::ACTION_RETRIEVE, sprintf('%s/%s?token=%s', $this->getCreateUrl(), $messageId, $token));
+            $this->sendApiCall(self::ACTION_RETRIEVE, sprintf('%s/%s?token=%s', $this->getCreateUrl(), urlencode($messageId), $token));
         } catch (Exception $e) {
             if (Verification\Exception::isVerificationException($e)) {
                 throw new Verification\Exception($e);
