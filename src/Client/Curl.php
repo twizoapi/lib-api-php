@@ -44,8 +44,9 @@ class Curl extends AbstractClient
         );
 
         if ($fields) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($fields));
-            $requestHeaders[] = 'Content-Length: ' . strlen(json_encode($fields));
+            $data = json_encode($fields);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            $requestHeaders[] = 'Content-Length: ' . strlen($data);
         }
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $requestHeaders);
@@ -53,13 +54,11 @@ class Curl extends AbstractClient
         $body = curl_exec($curl);
         $statusCode = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        $response = $this->generateResponse($statusCode, $body);
-
-        if (curl_errno($curl)) {
-            throw new Exception('Error while sending request to api: ' . curl_error($curl), Exception::SERVER_UNAVAILABLE, $response);
+        if (curl_errno($curl) === 0) {
+            return $this->generateResponse($statusCode, $body);
+        } else {
+            throw new Exception('Error while sending request to api: ' . curl_error($curl), Exception::SERVER_UNAVAILABLE, new Response($body, $statusCode));
         }
-
-        return $response;
     }
 
     /**
@@ -71,6 +70,6 @@ class Curl extends AbstractClient
     {
         $curlVersion = curl_version();
 
-        return array_merge(parent::getUserAgentInfo(), array('curl-no-guzzle/' . $curlVersion["version"], 'php/' . phpversion()));
+        return array_merge(parent::getUserAgentInfo(), array('curl/' . $curlVersion["version"], 'php/' . phpversion()));
     }
 }

@@ -7,7 +7,6 @@ Connect to the Twizo API using PHP. This API includes functions to send verifica
 
 ## Requirements ##
 * PHP >= 5.4
-* Guzzle 5.3
 * Composer
 
 ## Get application secret and api host ##

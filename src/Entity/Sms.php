@@ -414,7 +414,7 @@ class Sms extends AbstractEntity
 
         $result = array();
         foreach ($response->getBody()['_embedded']['items'] as $item) {
-            $result[] = $sms = new Sms($this->client);
+            $result[] = $sms = new Sms($this->client, $this->factory);
             $sms->setFields($item);
         }
 
@@ -439,7 +439,7 @@ class Sms extends AbstractEntity
 
         $result = array();
         foreach ($response->getBody()['_embedded']['items'] as $item) {
-            $result[] = $sms = new Sms($this->client);
+            $result[] = $sms = new Sms($this->client, $this->factory);
             $sms->setFields($item);
             $sms->setType(self::TYPE_SIMPLE);
         }

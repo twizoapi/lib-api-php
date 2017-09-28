@@ -37,29 +37,10 @@ class Bootstrap
      */
     public function init()
     {
-        /**
-         * Initialisation file for the example files
-         *
-         * This file is part of the Twizo php api
-         *
-         * (c) Twizo <info@twizo.com>
-         *
-         * For the full copyright and license information, please view the LICENSE
-         * File that was distributed with this source code.
-         */
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
-        /**
-         * Load composer auto loader or when not available the Twizo auto loader
-         *
-         * This file is part of the Twizo php api
-         *
-         * (c) Twizo <info@twizo.com>
-         *
-         * For the full copyright and license information, please view the LICENSE
-         * File that was distributed with this source code.
-         */
+        // Load composer auto loader or when not available the Twizo auto loader
         if (file_exists($this->baseDir . '/vendor/autoload.php')) {
             require_once($this->baseDir . '/vendor/autoload.php');
         } else {

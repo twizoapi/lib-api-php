@@ -18,7 +18,7 @@ abstract class AbstractClient
 {
     const API_USERNAME = 'twizo';
     const API_VERSION = 'v1';
-    const LIB_VERSION = '0.1.0';
+    const LIB_VERSION = '0.6.0';
 
     /**
      * @var string
@@ -60,13 +60,10 @@ abstract class AbstractClient
     public static function getInstance($secret, $apiHost)
     {
         if (self::$instance === null) {
-            if (class_exists('GuzzleHttp\Client')) {
-                self::$instance = new Client\Guzzle($secret, $apiHost);
-            } elseif (function_exists('curl_version')) {
-                self::$instance = new Client\Curl($secret, $apiHost);
-            } else {
-                throw new ClientException('No guzzle or curl was found', ClientException::NO_CURL_OR_GUZZLE_FOUND);
+            if (false === function_exists('curl_version')) {
+                throw new ClientException('No curl was found', ClientException::NO_CURL_FOUND);
             }
+            self::$instance = new Client\Curl($secret, $apiHost);
         }
 
         return self::$instance;

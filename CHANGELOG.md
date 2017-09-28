@@ -4,6 +4,14 @@ CHANGELOG
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.0 - 2017-09-28
+### Fixed
+- Missing factory instances in some of the SMS entity constructors
+
+### Removed
+- Guzzle is no longer needed for the library.
+- Duplicated license/help information in the example bootstrap is removed
+
 ## 0.5.0 - 2017-07-05
 ### Fixed
 - Fixing backup code uri for create statement
