@@ -127,7 +127,6 @@ class TwizoTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      * @coversDefaultClass getInstance
-     * @uses \Twizo\Api\Client\Guzzle
      * @uses \Twizo\Api\AbstractClient
      * @uses \Twizo\Api\Entity\Factory
      */
