@@ -2,7 +2,7 @@
     "name": "twizo/lib-api-php",
     "description": "Library to connect to Twizo to send SMS, Number Lookup or Verifications",
     "require": {
-        "php" : "^5.4",
+        "php" : "^5.4|^7.0",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-openssl": "*",

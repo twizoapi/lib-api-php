@@ -4,6 +4,10 @@ CHANGELOG
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.0 - 2017-10-25
+### Added
+- Support for PHP 7
+
 ## 0.6.0 - 2017-09-28
 ### Fixed
 - Missing factory instances in some of the SMS entity constructors
