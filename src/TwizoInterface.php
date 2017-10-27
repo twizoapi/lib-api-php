@@ -62,13 +62,13 @@ interface TwizoInterface
     /**
      * Create widget session with the supplied data
      *
-     * @param array       $allowedTypes
+     * @param array|null  $allowedTypes
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
      *
      * @return WidgetSession
      */
-    public function createWidgetSession(array $allowedTypes, $recipient = null, $backupCodeIdentifier = null);
+    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null);
 
     /**
      * Get backup code status for the supplied identifier

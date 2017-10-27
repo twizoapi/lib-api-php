@@ -67,6 +67,11 @@ class WidgetSession extends AbstractEntity
     /**
      * @var string|null
      */
+    protected $preferredType;
+
+    /**
+     * @var string|null
+     */
     protected $recipient;
 
     /**
@@ -226,6 +231,14 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
+     * @return null|string
+     */
+    public function getPreferredType()
+    {
+        return $this->preferredType;
+    }
+
+    /**
      * @return string|null
      */
     public function getRecipient()
@@ -364,6 +377,15 @@ class WidgetSession extends AbstractEntity
     {
         $this->language = $language;
         $this->addPostField('language');
+    }
+
+    /**
+     * @param string $preferredType
+     */
+    public function setPreferredType($preferredType)
+    {
+        $this->preferredType = $preferredType;
+        $this->addPostField('preferredType');
     }
 
     /**

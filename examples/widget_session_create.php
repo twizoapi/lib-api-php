@@ -16,15 +16,18 @@ use Twizo\Examples\Util\EntityFormatter;
 
 $twizo = Twizo\Api\Twizo::getInstance(SECRET, API_HOST);
 
-$allowedTypes = array_map('trim', explode(',', readline('AllowedType(s) (Delimiter: ","): ')));
-$recipient = null;
-$backupCodeIdentifier = null;
-if (in_array(WidgetSession::TYPE_SMS, $allowedTypes) || in_array(WidgetSession::TYPE_CALL, $allowedTypes)) {
-    $recipient = readline('Number: ');
+$allowedTypes = null;
+$allowedTypeInput = readline('AllowedType(s) (Delimiter: ",") (Allowed to empty): ');
+if ("" !== $allowedTypeInput) {
+    $allowedTypes = array_map('trim', explode(',', $allowedTypeInput));
 }
-
-if (in_array(WidgetSession::TYPE_BACKUP_CODE, $allowedTypes)) {
-    $backupCodeIdentifier = readline('BackupCodeIdentifier: ');
+$recipient = readline('Number(Allowed to empty): ');
+if ("" === $recipient) {
+    $recipient = null;
+}
+$backupCodeIdentifier = readline('BackupCodeIdentifier(Allowed to empty): ');
+if ("" === $backupCodeIdentifier) {
+    $backupCodeIdentifier = null;
 }
 
 $widget = $twizo->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier);
