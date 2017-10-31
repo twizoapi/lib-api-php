@@ -4,6 +4,13 @@ CHANGELOG
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0 - 2017-10-31
+### Added
+- PreferredType option for widget sessions
+
+### Changed
+- AllowedTypes in the widget session is optional now
+
 ## 0.7.0 - 2017-10-25
 ### Added
 - Support for PHP 7
