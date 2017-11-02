@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\Application;
 use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\NumberLookup;
@@ -284,6 +285,21 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Get verification types allowed for the supplied credentials
+     *
+     * @return Application\VerificationTypes
+     *
+     * @throws Exception
+     */
+    public function getVerificationTypes()
+    {
+        $verificationTypes = $this->factory->createEmptyApplicationVerificationTypes();
+        $verificationTypes->loadData();
+
+        return $verificationTypes;
+    }
+
+    /**
      * Get widget session status for the supplied session token
      *
      * @param string      $sessionToken
@@ -300,6 +316,21 @@ class Twizo implements TwizoInterface
         $widgetSession->populate($sessionToken, $recipient, $backupCodeIdentifier);
 
         return $widgetSession;
+    }
+
+    /**
+     * Verify credentials by returning the application object
+     *
+     * @return Application\VerifyCredentials
+     *
+     * @throws Exception
+     */
+    public function verifyCredentials()
+    {
+        $verifyCredentials = $this->factory->createEmptyApplicationVerifyCredentials();
+        $verifyCredentials->loadData();
+
+        return $verifyCredentials;
     }
 
     /**

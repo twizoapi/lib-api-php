@@ -26,7 +26,7 @@ try {
     EntityFormatter::dumpEntity($backupCode);
 } catch (BackupCode\Exception $ex) {
     printf(
-        "BackupCode\Exception occurred: [%s] %s" . PHP_EOL,
+        "BackupCode\\Exception occurred: [%s] %s" . PHP_EOL,
         $ex->getStatusCode(),
         $ex->getMessage()
     );

@@ -40,5 +40,5 @@ try {
         }
     }
 } catch (Twizo\Api\Entity\Exception $e) {
-    print 'Exception occured while sending request to server: ' . $e->getMessage() . PHP_EOL;
+    print 'Exception occurred while sending request to server: ' . $e->getMessage() . PHP_EOL;
 }

@@ -5,7 +5,7 @@ namespace Twizo\Api\Entity;
 use Twizo\Api\AbstractEntity;
 
 /**
- * Verification entity object
+ * Balance entity object
  *
  * This file is part of the Twizo php api
  *

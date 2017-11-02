@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Retrieve the backup codes status of identifier; the identifier is read from console
+ * Verify credentials
  *
  * This file is part of the Twizo php api
  *
@@ -12,24 +13,17 @@
 require_once(dirname(__FILE__) . '/util/Bootstrap.php');
 
 use Twizo\Api\Entity;
-use Twizo\Api\Entity\BackupCode;
 use Twizo\Examples\Util\EntityFormatter;
 
 $twizo = Twizo\Api\Twizo::getInstance(SECRET, API_HOST);
 
 try {
-    $backupCode = $twizo->getBackupCode(readline('Identifier: ' ));
+    $application = $twizo->verifyCredentials();
 
-    EntityFormatter::dumpEntity($backupCode);
-} catch (BackupCode\Exception $ex) {
-    printf(
-        "BackupCode\\Exception occurred: [%s] %s" . PHP_EOL,
-        $ex->getStatusCode(),
-        $ex->getMessage()
-    );
+    EntityFormatter::dumpEntity($application);
 } catch (Entity\Exception $ex) {
     printf(
-        "EntityException occurred: [%s] %s" . PHP_EOL,
+        "Entity\\Exception occurred: [%s] %s" . PHP_EOL,
         $ex->getStatusCode(),
         $ex->getMessage()
     );

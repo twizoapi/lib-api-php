@@ -28,7 +28,7 @@ try {
     print "Backup code deleted!" . PHP_EOL;
 } catch (BackupCode\Exception $ex) {
     printf(
-        "BackupCode\Exception occurred: [%s] %s" . PHP_EOL,
+        "BackupCode\\Exception occurred: [%s] %s" . PHP_EOL,
         $ex->getStatusCode(),
         $ex->getMessage()
     );

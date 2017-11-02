@@ -2,6 +2,7 @@
 
 namespace Twizo\Api;
 
+use Twizo\Api\Entity\Application;
 use Twizo\Api\Entity\BackupCode;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
@@ -152,6 +153,15 @@ interface TwizoInterface
     public function getVerification($messageId);
 
     /**
+     * Get verification types allowed for the supplied credentials
+     *
+     * @return Application\VerificationTypes
+     *
+     * @throws Exception
+     */
+    public function getVerificationTypes();
+
+    /**
      * Get widget session status for the supplied session token
      *
      * @param string      $sessionToken
@@ -173,4 +183,13 @@ interface TwizoInterface
      * @return bool
      */
     public function verifyToken($messageId, $token);
+
+    /**
+     * Verify credentials by returning the application object
+     *
+     * @return Application\VerifyCredentials
+     *
+     * @throws Exception
+     */
+    public function verifyCredentials();
 }

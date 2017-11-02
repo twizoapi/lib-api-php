@@ -4,6 +4,11 @@ CHANGELOG
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.9.0 - 2017-11-24
+### Added
+- Added 'VerifyCredentials' functionality to check whether the given credentials are valid.
+- Added 'VerificationTypes' functionality to retrieve a list of which verification types are available for the given credentials.
+
 ## 0.8.0 - 2017-10-31
 ### Added
 - PreferredType option for widget sessions

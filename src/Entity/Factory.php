@@ -47,6 +47,26 @@ class Factory
     }
 
     /**
+     * Create empty application verify credentials object
+     *
+     * @return Application\VerifyCredentials
+     */
+    public function createEmptyApplicationVerifyCredentials()
+    {
+        return new Application\VerifyCredentials($this->client, $this);
+    }
+
+    /**
+     * Create empty application verification types object
+     *
+     * @return Application\VerificationTypes
+     */
+    public function createEmptyApplicationVerificationTypes()
+    {
+        return new Application\VerificationTypes($this->client, $this);
+    }
+
+    /**
      * Create empty backup code object
      *
      * @return BackupCode

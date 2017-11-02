@@ -7,8 +7,14 @@ use Twizo\Api\Entity\Exception as EntityException;
 use Twizo\Api\Response;
 
 /**
- * Class BackupCode
- * @author Rick Wagemakers <rick@silverstreet.com>
+ * BackupCode entity object
+ *
+ * This file is part of the Twizo php api
+ *
+ * (c) Twizo <info@twizo.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * File that was distributed with this source code.
  */
 class BackupCode extends AbstractEntity
 {
