@@ -127,14 +127,29 @@ class TwizoTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      * @coversDefaultClass getInstance
-     * @uses \Twizo\Api\AbstractClient
-     * @uses \Twizo\Api\Entity\Factory
+     * @uses \Twizo\Api\AbstractClient::__construct
+     * @uses \Twizo\Api\Client\Curl::__construct
+     * @uses \Twizo\Api\Entity\Factory::__construct
      */
     public function getInstance()
     {
-         $instance = Twizo::getInstance('test_secret', 'test_host');
-
+        // Create new instance and test the returned instance type
+        $instance = Twizo::getInstance('test_secret', 'test_host');
         $this->assertInstanceOf(self::TWIZO, $instance);
+
+        // Test if a new call returns the same instance
+        $sameInstance = Twizo::getInstance('test_secret', 'test_host');
+        $this->assertSame($instance, $sameInstance);
+
+        // Test new instance with different host
+        $newInstance = Twizo::getInstance('test_secret', 'new_host');
+        $this->assertInstanceOf(self::TWIZO, $instance);
+        $this->assertNotSame($instance, $newInstance);
+
+        // Test new instance with different secret
+        $newInstance = Twizo::getInstance('new_secret', 'test_host');
+        $this->assertInstanceOf(self::TWIZO, $instance);
+        $this->assertNotSame($instance, $newInstance);
     }
 
     /**

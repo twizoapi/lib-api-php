@@ -18,6 +18,33 @@ use Twizo\Api\Response;
 class Curl extends AbstractClient
 {
     /**
+     * Curl constructor
+     *
+     * @param string $secret
+     * @param string $apiHost
+     */
+    public function __construct($secret, $apiHost)
+    {
+        if (false === function_exists('curl_version')) {
+            throw new \RuntimeException('Curl extension was not installed');
+        }
+
+        parent::__construct($secret, $apiHost);
+    }
+
+    /**
+     * Add curl version to user agent
+     *
+     * @return array
+     */
+    public function getUserAgentInfo()
+    {
+        $curlVersion = curl_version();
+
+        return array_merge(parent::getUserAgentInfo(), array('curl/' . $curlVersion["version"], 'php/' . phpversion()));
+    }
+
+    /**
      * @param string $verb
      * @param string $location
      * @param array  $fields
@@ -59,17 +86,5 @@ class Curl extends AbstractClient
         } else {
             throw new Exception('Error while sending request to api: ' . curl_error($curl), Exception::SERVER_UNAVAILABLE, new Response($body, $statusCode));
         }
-    }
-
-    /**
-     * Add curl version to user agent
-     *
-     * @return array
-     */
-    public function getUserAgentInfo()
-    {
-        $curlVersion = curl_version();
-
-        return array_merge(parent::getUserAgentInfo(), array('curl/' . $curlVersion["version"], 'php/' . phpversion()));
     }
 }

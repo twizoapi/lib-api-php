@@ -19,11 +19,6 @@ use Twizo\Api\Response;
 class BackupCode extends AbstractEntity
 {
     /**
-     * @var string|null
-     */
-    protected $identifier;
-
-    /**
      * @var int|null
      */
     protected $amountOfCodesLeft;
@@ -39,16 +34,29 @@ class BackupCode extends AbstractEntity
     protected $createdDateTime;
 
     /**
+     * @var string|null
+     */
+    protected $identifier;
+
+    /**
      * @var Verification|null
      */
     protected $verification;
 
     /**
-     * @return string
+     * @throws Exception
      */
-    protected function getCreateUrl()
+    public function create()
     {
-        return 'backupcode';
+        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function delete()
+    {
+        $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
     }
 
     /**
@@ -65,6 +73,14 @@ class BackupCode extends AbstractEntity
     public function getCodes()
     {
         return $this->codes;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCreateUrl()
+    {
+        return 'backupcode';
     }
 
     /**
@@ -92,31 +108,6 @@ class BackupCode extends AbstractEntity
     }
 
     /**
-     * @param string $identifier
-     */
-    public function setIdentifier($identifier)
-    {
-        $this->identifier = $identifier;
-        $this->addPostField('identifier');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function create()
-    {
-        $this->sendApiCall(self::ACTION_CREATE, $this->getCreateUrl());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function delete()
-    {
-        $this->sendApiCall(self::ACTION_REMOVE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
-    }
-
-    /**
      * @param string $id
      *
      * @throws Exception
@@ -128,14 +119,6 @@ class BackupCode extends AbstractEntity
         }
 
         $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id));
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function update()
-    {
-        $this->sendApiCall(self::ACTION_UPDATE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
     }
 
     /**
@@ -159,6 +142,23 @@ class BackupCode extends AbstractEntity
 
             throw $exception;
         }
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+        $this->addPostField('identifier');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update()
+    {
+        $this->sendApiCall(self::ACTION_UPDATE, $this->getCreateUrl() . '/' . urlencode($this->identifier));
     }
 
     /**

@@ -29,6 +29,11 @@ class Twizo implements TwizoInterface
     protected $factory;
 
     /**
+     * @var Twizo[][]
+     */
+    protected static $instances = array();
+
+    /**
      * Twizo constructor.
      *
      * @param Factory $factory
@@ -121,6 +126,23 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Get backup code status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return BackupCode
+     *
+     * @throws Exception
+     */
+    public function getBackupCode($identifier)
+    {
+        $backupCode = $this->factory->createEmptyBackupCode();
+        $backupCode->populate($identifier);
+
+        return $backupCode;
+    }
+
+    /**
      * Return the current account balance
      *
      * @return Balance
@@ -145,28 +167,15 @@ class Twizo implements TwizoInterface
      */
     public static function getInstance($secret, $apiHost)
     {
-        return new self(
-            new Entity\Factory(
-                AbstractClient::getInstance($secret, $apiHost)
-            )
-        );
-    }
+        if (!isset(self::$instances[$secret][$apiHost])) {
+            self::$instances[$secret][$apiHost] = new self(
+                new Entity\Factory(
+                    new Client\Curl($secret, $apiHost)
+                )
+            );
+        }
 
-    /**
-     * Get backup code status for the supplied identifier
-     *
-     * @param string $identifier
-     *
-     * @return BackupCode
-     *
-     * @throws Exception
-     */
-    public function getBackupCode($identifier)
-    {
-        $backupCode = $this->factory->createEmptyBackupCode();
-        $backupCode->populate($identifier);
-
-        return $backupCode;
+        return self::$instances[$secret][$apiHost];
     }
 
     /**

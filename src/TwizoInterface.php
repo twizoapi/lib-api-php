@@ -175,6 +175,15 @@ interface TwizoInterface
     public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
 
     /**
+     * Verify credentials by returning the application object
+     *
+     * @return Application\VerifyCredentials
+     *
+     * @throws Exception
+     */
+    public function verifyCredentials();
+
+    /**
      * Verify token and return true when successful and false when there is an error
      *
      * @param string $messageId
@@ -183,13 +192,4 @@ interface TwizoInterface
      * @return bool
      */
     public function verifyToken($messageId, $token);
-
-    /**
-     * Verify credentials by returning the application object
-     *
-     * @return Application\VerifyCredentials
-     *
-     * @throws Exception
-     */
-    public function verifyCredentials();
 }

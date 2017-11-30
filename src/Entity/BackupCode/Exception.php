@@ -44,14 +44,6 @@ class Exception extends EntityException
     }
 
     /**
-     * @return int
-     */
-    public function getErrorCode()
-    {
-        return $this->jsonErrorCode;
-    }
-
-    /**
      * Get a list of all valid json status codes for backup code failures
      *
      * @return array
@@ -64,6 +56,14 @@ class Exception extends EntityException
             self::INVALID_TOKEN,
             self::IDENTIFIER_TOO_LONG,
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode()
+    {
+        return $this->jsonErrorCode;
     }
 
     /**

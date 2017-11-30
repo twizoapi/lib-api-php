@@ -18,7 +18,7 @@ class Exception extends \Exception
     const INVALID_RESPONSE = 2;
     const VALIDATION_ERRORS = 3;
     const VERIFICATION_FAILED = 4;
-    const NO_CURL_FOUND = 5;
+    // Code 5 was used for NO_CURL_FOUND
     const INVALID_FIELDS = 6;
     const NO_MESSAGE_ID_SUPPLIED = 7;
     const INVALID_APPLICATION_SECRET = 8;

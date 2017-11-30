@@ -18,17 +18,12 @@ abstract class AbstractClient
 {
     const API_USERNAME = 'twizo';
     const API_VERSION = 'v1';
-    const LIB_VERSION = '0.9.0';
+    const LIB_VERSION = '0.10.0';
 
     /**
      * @var string
      */
     protected $apiHost;
-
-    /**
-     * @var AbstractClient|null
-     */
-    protected static $instance;
 
     /**
      * @var string
@@ -48,25 +43,29 @@ abstract class AbstractClient
     }
 
     /**
-     * Return new client instance
+     * Decode json array and convert it to an array
      *
-     * @param string $secret
-     * @param string $apiHost
+     * @param int    $statusCode
+     * @param string $json
      *
-     * @return AbstractClient
+     * @return Response
      *
      * @throws ClientException
      */
-    public static function getInstance($secret, $apiHost)
+    protected function generateResponse($statusCode, $json)
     {
-        if (self::$instance === null) {
-            if (false === function_exists('curl_version')) {
-                throw new ClientException('No curl was found', ClientException::NO_CURL_FOUND);
+        if (empty($json) && $statusCode == Response::REST_SUCCESS_NO_CONTENT) {
+            return new Response(array(), $statusCode);
+        } else {
+            $body = json_decode($json, true);
+            if ($body == null) {
+                throw new ClientException('Error while sending request to api; Received invalid json: ' . $json, ClientException::SERVER_UNAVAILABLE);
             }
-            self::$instance = new Client\Curl($secret, $apiHost);
-        }
+            $response = new Response($body, $statusCode);
+            $this->validateServerResponse($response);
 
-        return self::$instance;
+            return $response;
+        }
     }
 
     /**
@@ -98,6 +97,17 @@ abstract class AbstractClient
             'Twizo-php-lib/' . self::LIB_VERSION,
         );
     }
+
+    /**
+     * @param string $verb
+     * @param string $location
+     * @param array  $fields
+     *
+     * @return Response
+     *
+     * @throws Client\Exception
+     */
+    abstract public function sendRequest($verb, $location, $fields);
 
     /**
      * Validate response from server
@@ -150,41 +160,4 @@ abstract class AbstractClient
                 break;
         }
     }
-
-    /**
-     * Decode json array and convert it to an array
-     *
-     * @param int    $statusCode
-     * @param string $json
-     *
-     * @return Response
-     *
-     * @throws ClientException
-     */
-    protected function generateResponse($statusCode, $json)
-    {
-        if (empty($json) && $statusCode == Response::REST_SUCCESS_NO_CONTENT) {
-            return new Response(array(), $statusCode);
-        } else {
-            $body = json_decode($json, true);
-            if ($body == null) {
-                throw new ClientException('Error while sending request to api; Received invalid json: ' . $json, ClientException::SERVER_UNAVAILABLE);
-            }
-            $response = new Response($body, $statusCode);
-            $this->validateServerResponse($response);
-
-            return $response;
-        }
-    }
-
-    /**
-     * @param string $verb
-     * @param string $location
-     * @param array  $fields
-     *
-     * @return Response
-     *
-     * @throws Client\Exception
-     */
-    abstract public function sendRequest($verb, $location, $fields);
 }

@@ -140,33 +140,6 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
-     * @param string      $id
-     * @param string|null $recipient
-     * @param string|null $backupCodeIdentifier
-     *
-     * @throws EntityException
-     */
-    public function populate($id, $recipient = null, $backupCodeIdentifier = null)
-    {
-        if (empty($id)) {
-            throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
-        }
-        if ($recipient === null && $backupCodeIdentifier === null) {
-            throw new EntityException('No recipient or backup code identifier supplied', EntityException::INVALID_FIELDS);
-        }
-
-        $params = [];
-        if ($recipient !== null) {
-            $params['recipient'] = $recipient;
-        }
-        if ($backupCodeIdentifier !== null) {
-            $params['backupCodeIdentifier'] = $backupCodeIdentifier;
-        }
-
-        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id) . '?' . http_build_query($params));
-    }
-
-    /**
      * @return array
      */
     public function getAllowedTypes()
@@ -332,6 +305,33 @@ class WidgetSession extends AbstractEntity
     public function getVerificationIds()
     {
         return $this->verificationIds;
+    }
+
+    /**
+     * @param string      $id
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
+     *
+     * @throws EntityException
+     */
+    public function populate($id, $recipient = null, $backupCodeIdentifier = null)
+    {
+        if (empty($id)) {
+            throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
+        }
+        if ($recipient === null && $backupCodeIdentifier === null) {
+            throw new EntityException('No recipient or backup code identifier supplied', EntityException::INVALID_FIELDS);
+        }
+
+        $params = [];
+        if ($recipient !== null) {
+            $params['recipient'] = $recipient;
+        }
+        if ($backupCodeIdentifier !== null) {
+            $params['backupCodeIdentifier'] = $backupCodeIdentifier;
+        }
+
+        $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id) . '?' . http_build_query($params));
     }
 
     /**
