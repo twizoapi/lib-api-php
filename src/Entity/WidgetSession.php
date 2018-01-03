@@ -20,6 +20,10 @@ class WidgetSession extends AbstractEntity
     const TYPE_CALL = 'call';
     const TYPE_SMS = 'sms';
     const TYPE_BACKUP_CODE = 'backupcode';
+    const TYPE_TOTP = 'totp';
+    const TYPE_PUSH = 'push';
+    const TYPE_BIO_VOICE = 'biovoice';
+    const TYPE_TELEGRAM = 'telegram';
 
     const TOKEN_TYPE_NUMERIC = 'numeric';
     const TOKEN_TYPE_ALPHANUMERIC = 'alphanumeric';
@@ -58,6 +62,11 @@ class WidgetSession extends AbstractEntity
      * @var int|null
      */
     protected $dcs;
+
+    /**
+     * @var string|null
+     */
+    protected $issuer;
 
     /**
      * @var string|null
@@ -118,6 +127,11 @@ class WidgetSession extends AbstractEntity
      * @var string|null
      */
     protected $tokenType;
+
+    /**
+     * @var string|null
+     */
+    protected $totpIdentifier;
 
     /**
      * @var Verification|null
@@ -193,6 +207,14 @@ class WidgetSession extends AbstractEntity
     public function getDcs()
     {
         return $this->dcs;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getIssuer()
+    {
+        return $this->issuer;
     }
 
     /**
@@ -292,6 +314,14 @@ class WidgetSession extends AbstractEntity
     }
 
     /**
+     * @return null|string
+     */
+    public function getTotpIdentifier()
+    {
+        return $this->totpIdentifier;
+    }
+
+    /**
      * @return Verification|null
      */
     public function getVerification()
@@ -311,16 +341,17 @@ class WidgetSession extends AbstractEntity
      * @param string      $id
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
      *
      * @throws EntityException
      */
-    public function populate($id, $recipient = null, $backupCodeIdentifier = null)
+    public function populate($id, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null)
     {
         if (empty($id)) {
             throw new EntityException('No messages id supplied', EntityException::NO_MESSAGE_ID_SUPPLIED);
         }
-        if ($recipient === null && $backupCodeIdentifier === null) {
-            throw new EntityException('No recipient or backup code identifier supplied', EntityException::INVALID_FIELDS);
+        if ($recipient === null && $backupCodeIdentifier === null && $totpIdentifier === null) {
+            throw new EntityException('No recipient, backup code identifier or totp identifier supplied', EntityException::INVALID_FIELDS);
         }
 
         $params = [];
@@ -329,6 +360,9 @@ class WidgetSession extends AbstractEntity
         }
         if ($backupCodeIdentifier !== null) {
             $params['backupCodeIdentifier'] = $backupCodeIdentifier;
+        }
+        if ($totpIdentifier !== null) {
+            $params['totpIdentifier'] = $totpIdentifier;
         }
 
         $this->sendApiCall(self::ACTION_RETRIEVE, $this->getCreateUrl() . '/' . urlencode($id) . '?' . http_build_query($params));
@@ -368,6 +402,15 @@ class WidgetSession extends AbstractEntity
     {
         $this->dcs = $dcs;
         $this->addPostField('dcs');
+    }
+
+    /**
+     * @param null|string $issuer
+     */
+    public function setIssuer($issuer)
+    {
+        $this->issuer = $issuer;
+        $this->addPostField('issuer');
     }
 
     /**
@@ -449,5 +492,14 @@ class WidgetSession extends AbstractEntity
     {
         $this->tokenType = $tokenType;
         $this->addPostField('tokenType');
+    }
+
+    /**
+     * @param null|string $totpIdentifier
+     */
+    public function setTotpIdentifier($totpIdentifier)
+    {
+        $this->totpIdentifier = $totpIdentifier;
+        $this->addPostField('totpIdentifier');
     }
 }

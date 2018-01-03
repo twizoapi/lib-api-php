@@ -4,8 +4,11 @@ namespace Twizo\Api;
 
 use Twizo\Api\Entity\Application;
 use Twizo\Api\Entity\BackupCode;
+use Twizo\Api\Entity\BioVoiceRegistration;
+use Twizo\Api\Entity\BioVoiceSubscription;
 use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\NumberLookup;
+use Twizo\Api\Entity\Totp;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
 use Twizo\Api\Entity\Balance;
@@ -32,6 +35,17 @@ interface TwizoInterface
     public function createBackupCode($identifier);
 
     /**
+     * Create bio voice registration
+     *
+     * @param string      $recipient
+     * @param string|null $language
+     * @param string|null $webHook
+     *
+     * @return BioVoiceRegistration
+     */
+    public function createBioVoiceRegistration($recipient, $language = 'en', $webHook = null);
+
+    /**
      * Create number lookup for the supplied number(s)
      *
      * @param string|array $numbers
@@ -52,6 +66,16 @@ interface TwizoInterface
     public function createSms($body, $recipients, $sender);
 
     /**
+     * Create TOTP secret
+     *
+     * @param string      $identifier
+     * @param string|null $issuer
+     *
+     * @return Entity\Totp
+     */
+    public function createTotp($identifier, $issuer = null);
+
+    /**
      * Create verification for the supplied recipient
      *
      * @param string $recipient
@@ -66,10 +90,12 @@ interface TwizoInterface
      * @param array|null  $allowedTypes
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
      *
      * @return WidgetSession
      */
-    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null);
+    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null);
 
     /**
      * Get backup code status for the supplied identifier
@@ -81,6 +107,26 @@ interface TwizoInterface
      * @throws Exception
      */
     public function getBackupCode($identifier);
+
+    /**
+     * Get bio voice registration status for the supplied registrationId
+     *
+     * @param string $registrationId
+     *
+     * @return BioVoiceRegistration
+     * @throw Exception
+     */
+    public function getBioVoiceRegistration($registrationId);
+
+    /**
+     * Get bio voice subscription status for the supplied recipient
+     *
+     * @param string $recipient
+     *
+     * @return BioVoiceSubscription
+     * @throws Exception
+     */
+    public function getBioVoiceSubscription($recipient);
 
     /**
      * Return the current account balance
@@ -142,6 +188,17 @@ interface TwizoInterface
     public function getTokenResult($messageId, $token);
 
     /**
+     * Get totp status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return Totp
+     *
+     * @throws Exception
+     */
+    public function getTotp($identifier);
+
+    /**
      * Get verification status for the supplied message id
      *
      * @param string $messageId
@@ -167,12 +224,13 @@ interface TwizoInterface
      * @param string      $sessionToken
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
      *
      * @return WidgetSession
      *
      * @throws Exception
      */
-    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null);
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null);
 
     /**
      * Verify credentials by returning the application object

@@ -3,6 +3,7 @@
 namespace Twizo\Api\Entity\Application;
 
 use Twizo\Api\AbstractEntity;
+use Twizo\Api\Exception;
 
 /**
  * Application VerifyCredentials entity object
@@ -52,6 +53,8 @@ class VerifyCredentials extends AbstractEntity
 
     /**
      * Load the balance data from the server
+     *
+     * @throws Exception
      */
     public function loadData()
     {

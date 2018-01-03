@@ -4,9 +4,12 @@ namespace Twizo\Api;
 
 use Twizo\Api\Entity\Application;
 use Twizo\Api\Entity\BackupCode;
+use Twizo\Api\Entity\BioVoiceRegistration;
+use Twizo\Api\Entity\BioVoiceSubscription;
 use Twizo\Api\Entity\Factory;
 use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Sms;
+use Twizo\Api\Entity\Totp;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
 use Twizo\Api\Entity\Balance;
@@ -58,6 +61,22 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Create bio voice registration for the supplied recipient
+     *
+     * @param string      $recipient
+     * @param string|null $language
+     * @param string|null $webHook
+     *
+     * @return BioVoiceRegistration
+     */
+    public function createBioVoiceRegistration($recipient, $language = null, $webHook = null)
+    {
+        $bioVoiceRegistration = $this->factory->createBioVoiceRegistration($recipient, $language, $webHook);
+
+        return $bioVoiceRegistration;
+    }
+
+    /**
      * Create number lookup for the supplied number(s)
      *
      * @param string|array $numbers
@@ -96,6 +115,21 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Create TOTP secret
+     *
+     * @param string      $identifier
+     * @param string|null $issuer
+     *
+     * @return Entity\Totp
+     */
+    public function createTotp($identifier, $issuer = null)
+    {
+        $totp = $this->factory->createTotp($identifier, $issuer);
+
+        return $totp;
+    }
+
+    /**
      * Create verification for the supplied recipient
      *
      * @param string $recipient
@@ -115,12 +149,14 @@ class Twizo implements TwizoInterface
      * @param array|null  $allowedTypes
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
      *
      * @return WidgetSession
      */
-    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null)
+    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null)
     {
-        $widgetSession = $this->factory->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier);
+        $widgetSession = $this->factory->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier, $totpIdentifier, $issuer);
 
         return $widgetSession;
     }
@@ -156,14 +192,45 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Get bio voice registration status for the supplied registrationId
+     *
+     * @param string $registrationId
+     *
+     * @return BioVoiceRegistration
+     *
+     * @throws Exception
+     */
+    public function getBioVoiceRegistration($registrationId)
+    {
+        $bioVoiceRegistration = $this->factory->createEmptyBioVoiceRegistration();
+        $bioVoiceRegistration->populate($registrationId);
+
+        return $bioVoiceRegistration;
+    }
+
+    /**
+     * Get bio voice subscription status for the supplied recipient
+     *
+     * @param string $recipient
+     *
+     * @return BioVoiceSubscription
+     * @throws Exception
+     */
+    public function getBioVoiceSubscription($recipient)
+    {
+        $bioVoiceSubscription = $this->factory->createEmptyBioVoiceSubscription();
+        $bioVoiceSubscription->populate($recipient);
+
+        return $bioVoiceSubscription;
+    }
+
+    /**
      * Get a new Twizo instance
      *
      * @param string $secret
      * @param string $apiHost
      *
      * @return TwizoInterface
-     *
-     * @throws Exception
      */
     public static function getInstance($secret, $apiHost)
     {
@@ -277,6 +344,23 @@ class Twizo implements TwizoInterface
     }
 
     /**
+     * Get totp status for the supplied identifier
+     *
+     * @param string $identifier
+     *
+     * @return Totp
+     *
+     * @throws Exception
+     */
+    public function getTotp($identifier)
+    {
+        $totp = $this->factory->createEmptyTotp();
+        $totp->populate($identifier);
+
+        return $totp;
+    }
+
+    /**
      * Get verification status for the supplied message id
      *
      * @param string $messageId
@@ -314,15 +398,16 @@ class Twizo implements TwizoInterface
      * @param string      $sessionToken
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
      *
      * @return WidgetSession
      *
      * @throws Exception
      */
-    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null)
+    public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null)
     {
         $widgetSession = $this->factory->createEmptyWidgetSession();
-        $widgetSession->populate($sessionToken, $recipient, $backupCodeIdentifier);
+        $widgetSession->populate($sessionToken, $recipient, $backupCodeIdentifier, $totpIdentifier);
 
         return $widgetSession;
     }

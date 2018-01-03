@@ -129,7 +129,6 @@ class BackupCode extends AbstractEntity
      *
      * @throws BackupCode\Exception
      * @throws EntityException
-     * @throws Validation\Exception
      */
     protected function sendApiCall($verb, $location)
     {

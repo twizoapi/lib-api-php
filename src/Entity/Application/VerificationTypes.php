@@ -3,6 +3,7 @@
 namespace Twizo\Api\Entity\Application;
 
 use Twizo\Api\AbstractEntity;
+use Twizo\Api\Entity\Exception;
 
 /**
  * Application VerificationTypes entity object
@@ -39,6 +40,8 @@ class VerificationTypes extends AbstractEntity
 
     /**
      * Load the balance data from the server
+     *
+     * @throws Exception
      */
     public function loadData()
     {

@@ -18,6 +18,10 @@ class Verification extends AbstractEntity
 {
     const TYPE_CALL = 'call';
     const TYPE_SMS = 'sms';
+    const TYPE_PUSH = 'push';
+    const TYPE_BIO_VOICE = 'biovoice';
+    const TYPE_TELEGRAM = 'telegram';
+    const TYPE_LINE = 'line';
 
     const TOKEN_TYPE_NUMERIC = 'numeric';
     const TOKEN_TYPE_ALPHANUMERIC = 'alphanumeric';
@@ -47,6 +51,11 @@ class Verification extends AbstractEntity
      * @var int|null
      */
     protected $dcs;
+
+    /**
+     * @var string|null
+     */
+    protected $issuer;
 
     /**
      * @var string|null
@@ -137,6 +146,11 @@ class Verification extends AbstractEntity
      * @var int|null
      */
     protected $validity;
+
+    /**
+     * @var string|null
+     */
+    protected $voiceSentence;
 
     /**
      * @return string|null
@@ -323,6 +337,14 @@ class Verification extends AbstractEntity
     }
 
     /**
+     * @return null|string
+     */
+    public function getVoiceSentence()
+    {
+        return $this->voiceSentence;
+    }
+
+    /**
      * Create entity on server
      *
      * @throws Exception
@@ -348,6 +370,15 @@ class Verification extends AbstractEntity
     {
         $this->dcs = $dcs;
         $this->addPostField('dcs');
+    }
+
+    /**
+     * @param null|string $issuer
+     */
+    public function setIssuer($issuer)
+    {
+        $this->issuer = $issuer;
+        $this->addPostField('issuer');
     }
 
     /**

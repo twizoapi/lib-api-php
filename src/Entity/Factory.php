@@ -47,6 +47,31 @@ class Factory
     }
 
     /**
+     * Create bio voice registration object
+     *
+     * @param string      $recipient
+     * @param string|null $language
+     * @param string|null $webHook
+     *
+     * @return BioVoiceRegistration
+     */
+    public function createBioVoiceRegistration($recipient, $language = null, $webHook = null)
+    {
+        $bioVoiceRegistration = $this->createEmptyBioVoiceRegistration();
+        $bioVoiceRegistration->setRecipient($recipient);
+
+        if ($language !== null) {
+            $bioVoiceRegistration->setLanguage($language);
+        }
+
+        if ($webHook !== null) {
+            $bioVoiceRegistration->setWebHook($webHook);
+        }
+
+        return $bioVoiceRegistration;
+    }
+
+    /**
      * Create empty application verification types object
      *
      * @return Application\VerificationTypes
@@ -85,6 +110,26 @@ class Factory
     }
 
     /**
+     * Create empty bio voice registration object
+     *
+     * @return BioVoiceRegistration
+     */
+    public function createEmptyBioVoiceRegistration()
+    {
+        return new BioVoiceRegistration($this->client, $this);
+    }
+
+    /**
+     * Create empty bio voice subscription object
+     *
+     * @return BioVoiceSubscription
+     */
+    public function createEmptyBioVoiceSubscription()
+    {
+        return new BioVoiceSubscription($this->client, $this);
+    }
+
+    /**
      * Create empty number lookup object
      *
      * @return NumberLookup
@@ -104,6 +149,16 @@ class Factory
         $sms = new Sms($this->client, $this);
 
         return $sms;
+    }
+
+    /**
+     * Create empty totp object
+     *
+     * @return Totp
+     */
+    public function createEmptyTotp()
+    {
+        return new Totp($this->client, $this);
     }
 
     /**
@@ -200,6 +255,25 @@ class Factory
     }
 
     /**
+     * Create new totp secret secret
+     *
+     * @param string      $identifier
+     * @param string|null $issuer
+     *
+     * @return Totp
+     */
+    public function createTotp($identifier, $issuer = null)
+    {
+        $totp = $this->createEmptyTotp();
+        $totp->setIdentifier($identifier);
+        if (null !== $issuer) {
+            $totp->setIssuer($issuer);
+        }
+
+        return $totp;
+    }
+
+    /**
      * Create verification object
      *
      * @param string $recipient
@@ -220,10 +294,12 @@ class Factory
      * @param array|null  $allowedTypes
      * @param string|null $recipient
      * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
      *
      * @return WidgetSession
      */
-    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null)
+    public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null)
     {
         $widgetSession = $this->createEmptyWidgetSession();
 
@@ -236,6 +312,14 @@ class Factory
         }
         if ($backupCodeIdentifier !== null) {
             $widgetSession->setBackupCodeIdentifier($backupCodeIdentifier);
+        }
+
+        if ($totpIdentifier !== null) {
+            $widgetSession->setTotpIdentifier($totpIdentifier);
+        }
+
+        if ($issuer !== null) {
+            $widgetSession->setIssuer($issuer);
         }
 
         return $widgetSession;

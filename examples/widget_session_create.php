@@ -30,7 +30,17 @@ if ("" === $backupCodeIdentifier) {
     $backupCodeIdentifier = null;
 }
 
-$widget = $twizo->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier);
+$totpIdentifier = readline('TotpIdentifier(Allowed to empty): ');
+if ("" === $totpIdentifier) {
+    $totpIdentifier = null;
+}
+
+$issuer = readline('Issuer(Allowed to empty): ');
+if ("" === $issuer) {
+    $issuer = null;
+}
+
+$widget = $twizo->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier, $totpIdentifier, $issuer);
 $widget->create();
 
 

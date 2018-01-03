@@ -18,7 +18,7 @@ abstract class AbstractClient
 {
     const API_USERNAME = 'twizo';
     const API_VERSION = 'v1';
-    const LIB_VERSION = '0.10.0';
+    const LIB_VERSION = '0.11.0';
 
     /**
      * @var string

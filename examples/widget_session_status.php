@@ -14,6 +14,22 @@ require_once(dirname(__FILE__) . '/util/Bootstrap.php');
 use Twizo\Examples\Util\EntityFormatter;
 
 $twizo = Twizo\Api\Twizo::getInstance(SECRET, API_HOST);
-$widget = $twizo->getWidgetSession(readline('Session token: '), readline('Number: '), readline('BackupCodeIdentifier: '));
 
+$sessionToken = readline('Session token: ');
+$recipient = readLine('Number: ');
+if ("" === $recipient) {
+    $recipient = null;
+}
+
+$backupCodeIdentifier = readline('BackupCodeIdentifier: ');
+if ("" === $backupCodeIdentifier) {
+    $backupCodeIdentifier = null;
+}
+
+$totpIdentifier = readline('TotpIdentifier: ');
+if ("" === $totpIdentifier) {
+    $totpIdentifier = null;
+}
+
+$widget = $twizo->getWidgetSession($sessionToken, $recipient, $backupCodeIdentifier, $totpIdentifier);
 EntityFormatter::dumpEntity($widget);
