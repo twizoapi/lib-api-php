@@ -11,6 +11,7 @@ use Twizo\Api\Entity\NumberLookup;
 use Twizo\Api\Entity\Totp;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
+use Twizo\Api\Entity\WidgetRegisterSession;
 use Twizo\Api\Entity\Balance;
 
 /**
@@ -96,6 +97,19 @@ interface TwizoInterface
      * @return WidgetSession
      */
     public function createWidgetSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null);
+
+    /**
+     * Create widget register session with the supplied data
+     *
+     * @param array|null  $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
+     *
+     * @return WidgetRegisterSession
+     */
+    public function createWidgetRegisterSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null);
 
     /**
      * Get backup code status for the supplied identifier
@@ -231,6 +245,17 @@ interface TwizoInterface
      * @throws Exception
      */
     public function getWidgetSession($sessionToken, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null);
+
+    /**
+     * Get widget register session status for the supplied session token
+     *
+     * @param string $sessionToken
+     *
+     * @return WidgetRegisterSession
+     *
+     * @throws Exception
+     */
+    public function getWidgetRegisterSession($sessionToken);
 
     /**
      * Verify credentials by returning the application object

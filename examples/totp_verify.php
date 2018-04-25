@@ -25,7 +25,7 @@ print PHP_EOL;
 EntityFormatter::dumpEntity($totp);
 print PHP_EOL;
 
-print "[Verify backup code]" . PHP_EOL;
+print "[Verify totp code]" . PHP_EOL;
 try {
     $totp->verify(readline('Code: '));
     EntityFormatter::dumpEntity($totp);

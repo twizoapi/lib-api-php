@@ -12,6 +12,7 @@ use Twizo\Api\Entity\Sms;
 use Twizo\Api\Entity\Totp;
 use Twizo\Api\Entity\Verification;
 use Twizo\Api\Entity\WidgetSession;
+use Twizo\Api\Entity\WidgetRegisterSession;
 use Twizo\Api\Entity\Balance;
 
 /**
@@ -159,6 +160,24 @@ class Twizo implements TwizoInterface
         $widgetSession = $this->factory->createWidgetSession($allowedTypes, $recipient, $backupCodeIdentifier, $totpIdentifier, $issuer);
 
         return $widgetSession;
+    }
+
+    /**
+     * Create widget register session with the supplied data
+     *
+     * @param array|null  $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
+     *
+     * @return WidgetRegisterSession
+     */
+    public function createWidgetRegisterSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null)
+    {
+        $widgetRegisterSession = $this->factory->createWidgetRegisterSession($allowedTypes, $recipient, $backupCodeIdentifier, $totpIdentifier, $issuer);
+
+        return $widgetRegisterSession;
     }
 
     /**
@@ -410,6 +429,23 @@ class Twizo implements TwizoInterface
         $widgetSession->populate($sessionToken, $recipient, $backupCodeIdentifier, $totpIdentifier);
 
         return $widgetSession;
+    }
+
+    /**
+     * Get widget register session status for the supplied session token
+     *
+     * @param string $sessionToken
+     *
+     * @return WidgetRegisterSession
+     *
+     * @throws Exception
+     */
+    public function getWidgetRegisterSession($sessionToken)
+    {
+        $widgetRegisterSession = $this->factory->createEmptyWidgetRegisterSession();
+        $widgetRegisterSession->populate($sessionToken);
+
+        return $widgetRegisterSession;
     }
 
     /**

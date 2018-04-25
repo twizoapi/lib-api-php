@@ -182,6 +182,16 @@ class Factory
     }
 
     /**
+     * Create empty widget register session object
+     *
+     * @return WidgetRegisterSession
+     */
+    public function createEmptyWidgetRegisterSession()
+    {
+        return new WidgetRegisterSession($this->client, $this);
+    }
+
+    /**
      * Create object by property name
      *
      * @param string $propertyName
@@ -323,5 +333,42 @@ class Factory
         }
 
         return $widgetSession;
+    }
+
+    /**
+     * Create widget register session object
+     *
+     * @param array|null  $allowedTypes
+     * @param string|null $recipient
+     * @param string|null $backupCodeIdentifier
+     * @param string|null $totpIdentifier
+     * @param string|null $issuer
+     *
+     * @return WidgetRegisterSession
+     */
+    public function createWidgetRegisterSession(array $allowedTypes = null, $recipient = null, $backupCodeIdentifier = null, $totpIdentifier = null, $issuer = null)
+    {
+        $widgetRegisterSession = $this->createEmptyWidgetRegisterSession();
+
+        if ($allowedTypes !== null) {
+            $widgetRegisterSession->setAllowedTypes($allowedTypes);
+        }
+
+        if ($recipient !== null) {
+            $widgetRegisterSession->setRecipient($recipient);
+        }
+        if ($backupCodeIdentifier !== null) {
+            $widgetRegisterSession->setBackupCodeIdentifier($backupCodeIdentifier);
+        }
+
+        if ($totpIdentifier !== null) {
+            $widgetRegisterSession->setTotpIdentifier($totpIdentifier);
+        }
+
+        if ($issuer !== null) {
+            $widgetRegisterSession->setIssuer($issuer);
+        }
+
+        return $widgetRegisterSession;
     }
 }

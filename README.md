@@ -1,4 +1,4 @@
-![Twizo](https://www.twizo.com/wp-content/themes/twizo/_/images/twizo-logo-0474ce6f.png) 
+![Twizo](http://www.twizo.com/online/logo/twizo-logo.png) 
 
 
 # Twizo PHP API #
