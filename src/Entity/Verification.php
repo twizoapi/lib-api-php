@@ -22,6 +22,7 @@ class Verification extends AbstractEntity
     const TYPE_BIO_VOICE = 'biovoice';
     const TYPE_TELEGRAM = 'telegram';
     const TYPE_LINE = 'line';
+    const TYPE_FACEBOOK_MESSENGER = 'facebook_messenger';
 
     const TOKEN_TYPE_NUMERIC = 'numeric';
     const TOKEN_TYPE_ALPHANUMERIC = 'alphanumeric';

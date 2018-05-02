@@ -4,6 +4,10 @@ CHANGELOG
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.13.0 - 2018-05-02
+### Added
+- Verification type 'Facebook Messenger'
+
 ## 0.12.0 - 2018-03-29
 ### Added
 - Added WidgetRegister session create & status.
